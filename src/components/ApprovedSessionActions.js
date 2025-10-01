@@ -17,7 +17,7 @@ function ApprovedSessionActions({ session }) {
       </button>
       <button
         className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
-        onClick={() => alert(`Opening Chat for ${session.topic}`)}
+        onClick={() => `/messages`}
       >
         Messages
       </button>

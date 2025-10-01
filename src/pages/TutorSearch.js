@@ -35,11 +35,11 @@ const TutorSearch = () => {
               key={tutor.id}
               className="tutor-card"
               style={{marginBottom:16, cursor:'pointer', padding: '16px', borderRadius: '12px', boxShadow:'0 2px 12px rgba(0,0,0,0.08)', background:'#fff'}}
-              onClick={() => navigate(`/tutor-profile/${tutor.id}`)}
+              onClick={() => navigate(`/messages`)}
             >
               <h2 style={{color:'#2563eb'}}>{tutor.name}</h2>
               <p style={{color:'#888'}}>Subject: {tutor.subject}</p>
-              <span style={{color:'#2563eb', fontSize:'0.95rem', textDecoration:'underline'}}>Message Tutor</span>
+              <span style={{color:'#2563eb', fontSize:'0.95rem', textDecoration:'underline'}}>Message</span>
             </div>
           ))
         ) : (

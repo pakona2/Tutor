@@ -98,7 +98,7 @@ function Home() {
 
       {/* Footer */}
       <footer className="footer">
-        © {new Date().getFullYear()} TutorConnect. All rights reserved. Mr.BT
+        © {new Date().getFullYear()} MyTeacher App. All rights reserved.
       </footer>
     </div>
   );

@@ -1,20 +1,16 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Messages from './Messages';
 
 function TutorProfile() {
   const { tutorId } = useParams();
-
-  // Ratings state (localStorage per tutor)
   const [reviews, setReviews] = useState(() => {
     return JSON.parse(localStorage.getItem(`reviews_${tutorId}`) || '[]');
   });
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
-  // Add review
   const handleAddReview = () => {
     if (rating < 1 || rating > 5 || !reviewText.trim()) return;
     const updated = [...reviews, { rating, text: reviewText, date: new Date().toLocaleDateString() }];
@@ -24,7 +20,6 @@ function TutorProfile() {
     setReviewText('');
   };
 
-  // Average rating
   const avgRating = reviews.length > 0 ? (reviews.reduce((a, r) => a + r.rating, 0) / reviews.length).toFixed(1) : null;
 
   return (
@@ -43,13 +38,14 @@ function TutorProfile() {
           <div style={{marginBottom: 18}}>
             <strong>Tutor ID:</strong> {tutorId}
           </div>
-
+          {/* Editable Tutor Information */}
+          <TutorInfoForm tutorId={tutorId} />
           {/* Ratings and Reviews - always visible, fallback if empty */}
           <div style={{marginBottom:24, textAlign:'left', border:'2px solid #fbbf24', borderRadius:10, background:'#fffbe6', padding:'12px'}}>
             <h3 style={{fontWeight:'bold', color:'#fbbf24', marginBottom:8, fontSize:'1.2rem'}}>Ratings & Reviews</h3>
             <div style={{marginBottom:8}}>
               <span style={{fontWeight:'bold', fontSize:'1.1rem', color:'#fbbf24'}}>
-                {avgRating ? `605 ${avgRating}/5` : 'No ratings yet'}
+                {avgRating ? `${avgRating}/5` : 'No ratings yet'}
               </span>
               <span style={{marginLeft:12, color:'#888'}}>{reviews.length} review{reviews.length !== 1 ? 's' : ''}</span>
             </div>
@@ -84,8 +80,6 @@ function TutorProfile() {
               )}
             </div>
           </div>
-
-          <Messages tutorId={tutorId} />
         </div>
       </div>
     </div>
@@ -93,3 +87,74 @@ function TutorProfile() {
 }
 
 export default TutorProfile;
+
+function TutorInfoForm({ tutorId }) {
+  const defaultForm = {
+    name: 'John Doe',
+    email: 'johndoe@example.com',
+    subject: 'Mathematics, Physics',
+    bio: 'Experienced tutor passionate about helping students succeed.',
+    experience: '5',
+    qualifications: 'MSc in Mathematics',
+    hourlyRate: '30',
+  };
+  const [info, setInfo] = useState(() => {
+    const stored = localStorage.getItem(`tutor_info_${tutorId}`);
+    return stored ? JSON.parse(stored) : defaultForm;
+  });
+  const [editing, setEditing] = useState(() => {
+    const stored = localStorage.getItem(`tutor_info_${tutorId}`);
+    return !stored;
+  });
+  const [form, setForm] = useState({
+    name: info.name || defaultForm.name,
+    email: info.email || defaultForm.email,
+    subject: info.subject || defaultForm.subject,
+    bio: info.bio || defaultForm.bio,
+    experience: info.experience || defaultForm.experience,
+    qualifications: info.qualifications || defaultForm.qualifications,
+    hourlyRate: info.hourlyRate || defaultForm.hourlyRate,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    setInfo(form);
+    localStorage.setItem(`tutor_info_${tutorId}`, JSON.stringify(form));
+    setEditing(false);
+  };
+
+  return (
+    <div style={{marginBottom:32}}>
+      <h3 style={{fontWeight:'bold', color:'#2563eb', marginBottom:8}}>Tutor Information</h3>
+      {editing ? (
+        <form onSubmit={handleSave} style={{display:'flex', flexDirection:'column', gap:12}}>
+          <input name="name" value={form.name} onChange={handleChange} placeholder="Full Name" className="input" required />
+          <input name="email" value={form.email} onChange={handleChange} placeholder="Email" className="input" required />
+          <input name="subject" value={form.subject} onChange={handleChange} placeholder="Subject(s)" className="input" required />
+          <textarea name="bio" value={form.bio} onChange={handleChange} placeholder="Short Bio" className="input" rows={2} />
+          <input name="experience" value={form.experience} onChange={handleChange} placeholder="Experience (years)" className="input" />
+          <input name="qualifications" value={form.qualifications} onChange={handleChange} placeholder="Qualifications" className="input" />
+          <input name="hourlyRate" value={form.hourlyRate} onChange={handleChange} placeholder="Hourly Rate ($)" className="input" />
+          <button className="button" type="submit">Save</button>
+        </form>
+      ) : (
+        <div style={{background:'#f3f4f6', borderRadius:8, padding:'16px 18px'}}>
+          <div><strong>Name:</strong> {info.name || <span style={{color:'#888'}}>Not set</span>}</div>
+          <div><strong>Email:</strong> {info.email || <span style={{color:'#888'}}>Not set</span>}</div>
+          <div><strong>Subject(s):</strong> {info.subject || <span style={{color:'#888'}}>Not set</span>}</div>
+          <div><strong>Bio:</strong> {info.bio || <span style={{color:'#888'}}>Not set</span>}</div>
+          <div><strong>Experience:</strong> {info.experience || <span style={{color:'#888'}}>Not set</span>}</div>
+          <div><strong>Qualifications:</strong> {info.qualifications || <span style={{color:'#888'}}>Not set</span>}</div>
+          <div><strong>Hourly Rate:</strong> {info.hourlyRate ? `$${info.hourlyRate}` : <span style={{color:'#888'}}>Not set</span>}</div>
+          <button className="button" style={{marginTop:12}} onClick={() => setEditing(true)}>Edit Info</button>
+        </div>
+      )}
+    </div>
+  );
+}
+             

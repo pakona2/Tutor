@@ -54,17 +54,10 @@ const Messages = ({ tutorId }) => {
         minWidth: 220,
         textAlign: 'center',
         zIndex: 1100,
-      }}>
-        <img
-          src={`https://ui-avatars.com/api/?name=Tutor+${tutorId}`}
-          alt="Avatar"
-          style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', boxShadow: '0 2px 8px rgba(0,0,0,0.07)', marginBottom: 8 }}
-        />
-        <div style={{fontWeight:'bold', color:'#2563eb', fontSize:'1.1rem'}}>Tutor {tutorId}</div>
-        <div style={{color:'#888', fontSize:'0.95rem'}}>Online</div>
+      }}>   
       </div>
       {/* Chat header */}
-      <div style={{width:'100%', maxWidth:600, padding: '16px 16px 8px 16px', borderBottom: '1px solid #e5e7eb', background:'#2563eb', color:'#fff', fontWeight:'bold', fontSize:'1.1rem', position:'relative'}}>
+      <div style={{width:'100%', maxWidth:400, padding: '16px 16px 8px 16px', borderBottom: '1px solid #e5e7eb', background:'#2563eb', color:'#fff', fontWeight:'bold', fontSize:'1.1rem', position:'relative'}}>
         {tutorId ? `Chat with Tutor ${tutorId}` : 'Messages'}
       </div>
       {/* Chat messages */}

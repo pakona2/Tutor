@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 //import socket from './socket'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
+import HelpCenter from './pages/help/HelpCenter';
+import TermsAndConditions from './pages/help/TermsAndConditions';
 import Login from './pages/Login';
 import TutorDashboard from './pages/TutorDashboard';
 import StudentDashboard from './pages/StudentDashboard';
@@ -46,13 +48,15 @@ function App() {
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         <Route path="/student-profile" element={<StudentProfile />} />
-  <Route path="/tutor-profile/:tutorId" element={<TutorProfile />} />
+        <Route path="/tutor-profile/:tutorId" element={<TutorProfile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/book-session" element={<BookSession />} /> 
         <Route path="/tutor-sessions" element={<TutorSessions />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-  <Route path="/tutor-search" element={<TutorSearch />} />
+        <Route path="/tutor-search" element={<TutorSearch />} />
+        <Route path="/help" element={<HelpCenter />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

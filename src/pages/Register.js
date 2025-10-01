@@ -14,6 +14,7 @@ function Register() {
 
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,6 +28,10 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (!acceptedTerms) {
+      setError('You must accept the Terms and Conditions to register.');
+      return;
+    }
     setIsSubmitting(true);
 
     // Simulate registration without backend
@@ -53,7 +58,7 @@ function Register() {
 
         {error && <div className="error">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="fullName"
@@ -95,6 +100,18 @@ function Register() {
             <option value="tutor">Tutor</option>
           </select>
 
+          <div style={{margin:'16px 0'}}>
+            <label style={{display:'flex', alignItems:'center', fontSize:'0.98rem'}}>
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={e => setAcceptedTerms(e.target.checked)}
+                style={{marginRight:8}}
+                required
+              />
+              I accept the <a href="/terms" target="_blank" rel="noopener noreferrer" style={{color:'#2563eb', textDecoration:'underline', marginLeft:4}}>Terms and Conditions</a>
+            </label>
+          </div>
           <button type="submit" disabled={isSubmitting} className="button">
             {isSubmitting ? 'Registering...' : 'Register'}
           </button>

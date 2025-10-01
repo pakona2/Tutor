@@ -63,6 +63,15 @@ function TutorDashboard() {
             <div className="card">
               <h2>My Profile</h2>
               <p>View and edit your profile information.</p>
+              <button
+                className="button"
+                style={{marginTop:8, padding:'8px 16px'}}
+                onClick={() => {
+                  // For demo, use a static tutorId. Replace with actual logged-in tutor id if available.
+                  const tutorId = localStorage.getItem('tutor_id') || 'demo-tutor';
+                  window.location.href = `/tutor-profile/${tutorId}`;
+                }}
+              >Go to Profile</button>
             </div>
 
             {/* Session History - new card */}

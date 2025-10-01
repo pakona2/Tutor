@@ -1,3 +1,30 @@
+html.dark, body.dark {
+  background: #18181b !important;
+  color: #f3f4f6 !important;
+}
+
+.dark .navbar,
+.dark .form-box,
+.dark .card,
+.dark .profile-form,
+.dark .bg-white {
+  background: #23272f !important;
+  color: #f3f4f6 !important;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+  background: #18181b !important;
+  color: #f3f4f6 !important;
+  border-color: #444 !important;
+}
+
+.dark .button,
+.dark button {
+  background: #2563eb !important;
+  color: #f3f4f6 !important;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

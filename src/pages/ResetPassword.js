@@ -31,29 +31,29 @@ function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50 p-6">
-      <h1 className="text-3xl font-bold mb-6">Reset Password</h1>
-
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-sm">
-        <label className="block mb-2 font-semibold">Enter your email address</label>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Enter your Email"
-          className="w-full p-2 border rounded mb-4"
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
-        >
-          Send Reset Link
-        </button>
-      </form>
-
-      {message && <p className="mt-6 text-green-700 font-semibold">{message}</p>}
-      {error && <p className="mt-6 text-red-700 font-semibold">{error}</p>}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 p-6">
+      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md flex flex-col items-center">
+        <h1 className="text-3xl font-bold mb-4 text-blue-700">Reset Password</h1>
+        <p className="mb-6 text-gray-600 text-center">Enter your email address below and we'll send you a link to reset your password.</p>
+        <form onSubmit={handleSubmit} className="w-full">
+          <label className="block mb-2 font-semibold text-gray-700">Email Address</label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="you@email.com"
+            className="w-full p-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 mb-4 transition"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+          >
+            Send Reset Link
+          </button>
+        </form>
+        {message && <p className="mt-6 text-green-700 font-semibold text-center">{message}</p>}
+        {error && <p className="mt-6 text-red-700 font-semibold text-center">{error}</p>}
+      </div>
     </div>
   );
 }
