@@ -84,8 +84,10 @@ function StudentDashboard() {
   return (
     <div>
       <Navbar role="student" />
-      {/* NotificationBar always visible, fallback message if none */}
-      <NotificationBar message={notification || 'No reminders at this time.'} type="info" onClose={() => setNotification('')} />
+      {/* NotificationBar only appears when there is a notification */}
+      {notification && (
+        <NotificationBar message={notification} type="info" onClose={() => setNotification('')} />
+      )}
       {/* Persistent popup for reminders */}
       {popup && (
         <div style={{position:'fixed', top:80, right:24, zIndex:9999, background:'#fffbe6', color:'#fbbf24', border:'2px solid #fbbf24', borderRadius:10, padding:'16px 24px', fontWeight:'bold', fontSize:'1.1rem', boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>

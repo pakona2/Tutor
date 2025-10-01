@@ -6,16 +6,24 @@ import './pages.css';
 
 function Home() {
   return (
-    <div className="landing-container">
+    <div className="landing-container" style={{ background: '#f9fafb', minHeight: '100vh' }}>
 
       {/* Hero Section */}
-      <section className="hero-section" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1584697964154-0d94d3f3a940?auto=format&fit=crop&w=1600&q=80')` }}>
-        <div className="hero-content">
-          <Link to="/Login">
-            <button className="button" style={{marginBottom: '32px'}}>Get Started</button>
+      <section className="hero-section" style={{ position: 'relative', backgroundImage: `url('https://images.unsplash.com/photo-1584697964154-0d94d3f3a940?auto=format&fit=crop&w=1600&q=80')` }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'white',
+          zIndex: 1
+        }}></div>
+        <div className="hero-content" style={{ position: 'relative', zIndex: 2, background: '#fff', borderRadius: '18px', boxShadow: '0 2px 12px rgba(37,99,235,0.10)', padding: '32px 24px', maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
+          <p className="hero-subtitle" style={{marginBottom: '2.5rem', color:'#2563eb', fontWeight:'bold', fontSize:'1.3rem'}}>Find the perfect tutor or become one — in just a few clicks.</p>
+          <Link to="/register">
+            <button className="button" style={{marginBottom: '0.5rem', fontSize:'1.2rem', padding:'14px 36px', borderRadius:'32px', background:'#2563eb', color:'#fff', boxShadow:'0 4px 24px rgba(37,99,235,0.18)'}}>Get Started</button>
           </Link>
-          <h1 className="hero-title">TutorConnect</h1>
-          <p className="hero-subtitle">Find the perfect tutor or become one — in just a few clicks.</p>
         </div>
       </section>
 
@@ -68,19 +76,19 @@ function Home() {
         <h2 className="section-title">Meet Our Teachers</h2>
         <div className="teachers-list">
           <TeacherCard
-            image="/src/assets/1.jpg"
+            image={require('../assets/1.jpg')}
             name="Ms. Jane Doe"
             subject="Mathematics"
             bio="Passionate about making math fun and accessible for all ages."
           />
           <TeacherCard
-            image="/src/assets/image.png"
+            image={require('../assets/image.png')}
             name="Mr. John Smith"
             subject="English Literature"
             bio="Bringing stories to life and helping students find their voice."
           />
           <TeacherCard
-            image="/src/assets/imag.png"
+            image={require('../assets/imag.png')}
             name="Mrs. Emily Brown"
             subject="Science"
             bio="Exploring the wonders of the world through hands-on learning."
