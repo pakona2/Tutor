@@ -60,10 +60,16 @@ function Navbar({ role }) {
             </button>
             <Link to="/help" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Help Center</Link>
             {role === 'tutor' && (
-              <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+              <>
+                <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+                <Link to="/tutor-sessions" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>My Sessions</Link>
+              </>
             )}
             {role === 'student' && (
-              <Link to="/student-profile" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+              <>
+                <Link to="/student-profile" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+                <Link to="/book-session" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Book Session</Link>
+              </>
             )}
             <button onClick={() => {handleLogout(); setMenuOpen(false);}} className="navbar-logout">Logout</button>
           </div>
