@@ -1,4 +1,9 @@
 
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Messages from './Messages';
+
 function TutorProfile() {
   const { tutorId } = useParams();
 

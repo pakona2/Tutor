@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import ApprovedSessionActions from '../components/ApprovedSessionActions';
 import { format } from 'date-fns';
-import axios from 'axios';
 
-// API instance
-const API = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  withCredentials: true,
-});
 
 function BookSession() {
   const [form, setForm] = useState({
@@ -32,35 +26,21 @@ function BookSession() {
   });
 
   useEffect(() => {
-    // Fetch tutors from backend
-    API.get('/tutors')
-      .then((res) => {
-        setTutors(res.data);
-        setLoading(prev => ({ ...prev, tutors: false }));
-      })
-      .catch((err) => {
-        setSubmitStatus({
-          loading: false,
-          success: false,
-          error: 'Failed to load tutors. Please try again later.'
-        });
-        setLoading(prev => ({ ...prev, tutors: false }));
-      });
+    // Sample tutors fallback
+    const sampleTutors = [
+      { id: 1, name: 'Ms. Jane Doe', subject: 'Mathematics', email: 'jane@school.com' },
+      { id: 2, name: 'Mr. John Smith', subject: 'English Literature', email: 'john@school.com' },
+      { id: 3, name: 'Mrs. Emily Brown', subject: 'Science', email: 'emily@school.com' },
+      { id: 4, name: 'Dr. Alex Kim', subject: 'Physics', email: 'alex@school.com' },
+      { id: 5, name: 'Prof. Sara Lee', subject: 'Poetry', email: 'sara@school.com' }
+    ];
+    setTutors(sampleTutors);
+    setLoading(prev => ({ ...prev, tutors: false }));
 
-    // Fetch existing bookings
-    API.get('/bookings/my')
-      .then((res) => {
-        setBookings(res.data);
-        setLoading(prev => ({ ...prev, bookings: false }));
-      })
-      .catch((err) => {
-        setSubmitStatus({
-          loading: false,
-          success: false,
-          error: 'Failed to load bookings. Please try again later.'
-        });
-        setLoading(prev => ({ ...prev, bookings: false }));
-      });
+    // Load bookings from localStorage
+    const storedBookings = JSON.parse(localStorage.getItem('my_bookings') || '[]');
+    setBookings(storedBookings);
+    setLoading(prev => ({ ...prev, bookings: false }));
   }, []);
 
   const handleChange = (e) => {
@@ -99,34 +79,32 @@ function BookSession() {
     // Combine date and time into ISO string
     const session_time = new Date(`${form.date}T${form.time}`).toISOString();
 
-    API.post('/bookings', {
-      tutor_id: form.tutorId,
+    // Create new booking object
+    const newBooking = {
+      id: Date.now(),
+      tutorId: form.tutorId,
+      tutor_name: tutors.find(t => t.id === Number(form.tutorId))?.name || '',
       session_time,
-      topic: form.topic
-    })
-      .then((res) => {
-        setSubmitStatus({
-          loading: false,
-          success: 'Session booked successfully!',
-          error: null
-        });
-        // Optionally refresh bookings
-        API.get('/bookings/my').then((r) => setBookings(r.data));
-        // Clear form
-        setForm({ tutorId: '', date: '', time: '', topic: '' });
-        // Clear success message after 3 seconds
-        setTimeout(() => {
-          setSubmitStatus(prev => ({ ...prev, success: null }));
-        }, 3000);
-      })
-      .catch((err) => {
-        const errorMessage = err.response?.data?.message || 'Booking failed. Please try again.';
-        setSubmitStatus({
-          loading: false,
-          success: false,
-          error: errorMessage
-        });
-      });
+      topic: form.topic,
+      status: 'pending',
+      student_name: 'Student',
+    };
+
+    // Save to localStorage
+    const updatedBookings = [...bookings, newBooking];
+    setBookings(updatedBookings);
+    localStorage.setItem('my_bookings', JSON.stringify(updatedBookings));
+    localStorage.setItem('all_bookings', JSON.stringify(updatedBookings));
+
+    setSubmitStatus({
+      loading: false,
+      success: 'Session booked successfully!',
+      error: null
+    });
+    setForm({ tutorId: '', date: '', time: '', topic: '' });
+    setTimeout(() => {
+      setSubmitStatus(prev => ({ ...prev, success: null }));
+    }, 3000);
   };
 
   // Get today's date in YYYY-MM-DD format for min date

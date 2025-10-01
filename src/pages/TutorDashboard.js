@@ -34,16 +34,7 @@ function TutorDashboard() {
       <Navbar role="tutor" />
       <div className="min-h-screen bg-blue-50 p-6">
         <div className="dashboard">
-          <header className="dashboard-header">
-            Tutor Dashboard
-          </header>
-          <input
-            type="text"
-            placeholder="Search students by name or email..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-bar"
-          />
+                 
           <div className="cards-grid">
             {/* Upcoming Sessions */}
             <div className="card">
@@ -87,7 +78,15 @@ function TutorDashboard() {
               </div>
             </div>
           </div>
-          <Messages />
+          <div style={{marginTop:32, textAlign:'center'}}>
+            <button
+              className="button"
+              style={{padding:'12px 24px', fontSize:'1rem'}}
+              onClick={() => window.location.href = '/tutor-sessions'}
+            >
+              View All Sessions
+            </button>
+          </div>
         </div>
       </div>
     </div>

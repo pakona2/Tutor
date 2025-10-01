@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 
-const initialSessions = [
-  // sample session for demo, in real app fetch from backend
-  {
-    id: 1,
-    studentName: '',
-    date: '',
-    time: '15:00',
-    topic: '',
-    status: '',
-  },
-  {
-    id: 2,
-    studentName: '',
-    date: '',
-    time: '',
-    topic: '',
-    status: '',
-  },
-];
-
 function TutorSessions() {
-  const [sessions, setSessions] = useState(initialSessions);
+  const [sessions, setSessions] = useState([]);
+
+  useEffect(() => {
+    // Load all bookings from localStorage
+    const allBookings = JSON.parse(localStorage.getItem('all_bookings') || '[]');
+    // Map to session format for display
+    setSessions(allBookings.map(b => ({
+      id: b.id,
+      studentName: b.student_name || 'Student',
+      date: b.session_time ? b.session_time.split('T')[0] : '',
+      time: b.session_time ? b.session_time.split('T')[1].slice(0,5) : '',
+      topic: b.topic,
+      status: b.status || 'pending',
+    })));
+  }, []);
 
   const handleApprove = (id) => {
     setSessions(sessions.map(s => s.id === id ? {...s, status: 'approved'} : s));

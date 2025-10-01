@@ -96,14 +96,7 @@ function StudentDashboard() {
         <header className="dashboard-header">
           Student Dashboard
         </header>
-        <input
-          type="text"
-          placeholder="Search tutors by name or subject..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-bar"
-        />
-        <button type="submit" className="button" style={{marginTop:8, marginBottom:16}}>Search</button>
+        
         <div className="cards-grid">
           <div className="card">
             <h2>Upcoming Sessions</h2>
