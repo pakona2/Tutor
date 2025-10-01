@@ -1,3 +1,41 @@
+@media (max-width: 700px) {
+  .desktop-menu {
+    display: none !important;
+  }
+  .navbar-mobile-menu {
+    display: block !important;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+  .navbar-hamburger {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 2rem;
+    z-index: 100;
+  }
+  .navbar-dropdown {
+    position: absolute;
+    top: 48px;
+    right: 8px;
+    background: #23272f;
+    color: #f3f4f6;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    padding: 18px 20px;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 99;
+  }
+}
+
+.navbar-mobile-menu {
+  display: none;
+}
 html.dark, body.dark {
   background: #18181b !important;
   color: #f3f4f6 !important;
