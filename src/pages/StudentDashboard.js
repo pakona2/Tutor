@@ -8,6 +8,7 @@ import NotificationBar from '../components/NotificationBar';
 function StudentDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [notification, setNotification] = useState('Welcome to your dashboard!');
+  const [popup, setPopup] = useState(null);
   const navigate = useNavigate();
 
   // Progress tracker state
@@ -30,6 +31,12 @@ function StudentDashboard() {
     `${tutor.name} ${tutor.subject}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Upcoming sessions sample
+  const upcomingSessions = [
+    {id:1, tutor:'Ms. Jane Doe', date:'2025-10-03', time:'10:00', topic:'Algebra', attended: false},
+    {id:2, tutor:'Mr. John Smith', date:'2025-10-05', time:'14:00', topic:'Essay Writing', attended: false}
+  ];
+
   // Add a new goal
   const handleAddGoal = () => {
     if (!goalInput.trim()) return;
@@ -46,10 +53,45 @@ function StudentDashboard() {
     localStorage.setItem('student_goals', JSON.stringify(updated));
   };
 
+  // Notification for upcoming sessions within 24 hours
+  useEffect(() => {
+    const now = new Date();
+    const soonSession = upcomingSessions.find(s => {
+      const sessionDate = new Date(`${s.date}T${s.time}`);
+      return sessionDate - now < 24*60*60*1000 && sessionDate - now > 0;
+    });
+    if (soonSession) {
+      setNotification(`Reminder: You have a session with ${soonSession.tutor} on ${soonSession.date} at ${soonSession.time}`);
+      setPopup(`Upcoming session: ${soonSession.topic} with ${soonSession.tutor} at ${soonSession.time}`);
+      setTimeout(() => setPopup(null), 6000);
+    }
+  }, []);
+
+  // Notification for new messages (demo: show popup if there are messages in localStorage)
+  useEffect(() => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('messages_'));
+    let newMsg = false;
+    keys.forEach(k => {
+      const msgs = JSON.parse(localStorage.getItem(k) || '[]');
+      if (msgs.length > 0) newMsg = true;
+    });
+    if (newMsg) {
+      setPopup('You have new messages!');
+      setTimeout(() => setPopup(null), 6000);
+    }
+  }, []);
+
   return (
     <div>
       <Navbar role="student" />
-      <NotificationBar message={notification} type="info" onClose={() => setNotification('')} />
+      {/* NotificationBar always visible, fallback message if none */}
+      <NotificationBar message={notification || 'No reminders at this time.'} type="info" onClose={() => setNotification('')} />
+      {/* Persistent popup for reminders */}
+      {popup && (
+        <div style={{position:'fixed', top:80, right:24, zIndex:9999, background:'#fffbe6', color:'#fbbf24', border:'2px solid #fbbf24', borderRadius:10, padding:'16px 24px', fontWeight:'bold', fontSize:'1.1rem', boxShadow:'0 2px 12px rgba(0,0,0,0.08)'}}>
+          {popup}
+        </div>
+      )}
       <div className="dashboard">
         <header className="dashboard-header">
           Student Dashboard
