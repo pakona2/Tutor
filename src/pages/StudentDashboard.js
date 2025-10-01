@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import axios from 'axios';
+import API from '../api';
 import {Link} from 'react-router-dom';
-
-const API = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  withCredentials: true,
-});
+import './pages.css';
+import NotificationBar from '../components/NotificationBar';
 
 function StudentDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState('Welcome to your dashboard!');
 
   useEffect(() => {
     API.get('/tutors')
@@ -32,54 +30,52 @@ function StudentDashboard() {
   return (
     <div>
       <Navbar role="student" />
-      <div className="min-h-screen bg-blue-50 p-6">
-        <header className="mb-8 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-blue-700">Student Dashboard</h1>
+      <NotificationBar message={notification} type="info" onClose={() => setNotification('')} />
+      <div className="dashboard">
+        <header className="dashboard-header">
+          Student Dashboard
         </header>
-
-        {/* 🔍 Search Bar */}
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search tutors by name or subject..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-1/2 p-3 border border-gray-300 rounded shadow"/>
-            <div style={{marginBottom:20}}>
-              <Link to="/TutorSeach" style={{color:'blue'}}>
-                Find Tutors
-              </Link>
-              </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Upcoming Sessions */}
-          <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-            <h2 className="font-semibold text-lg mb-2">Upcoming Sessions</h2>
-            <p className="text-gray-600">You have 2 sessions scheduled this week.</p>
+        <input
+          type="text"
+          placeholder="Search tutors by name or subject..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+        <div className="cards-grid">
+          <div className="card">
+            <h2>Upcoming Sessions</h2>
+            <p>You have 2 sessions scheduled this week.</p>
           </div>
-
-          {/* Available Tutors - with filtered list */}
-          <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-            <h2 className="font-semibold text-lg mb-2">Available Tutors</h2>
+          <div className="card">
+            <h2>Available Tutors</h2>
             {loading ? (
-              <p className="text-gray-600">Loading tutors...</p>
+              <p>Loading tutors...</p>
             ) : filteredTutors.length > 0 ? (
               filteredTutors.map((tutor) => (
-                <div key={tutor.id} className="border-t pt-2 mt-2">
-                  <p className="text-gray-800 font-medium">{tutor.name}</p>
-                  <p className="text-gray-500 text-sm">{tutor.subject || 'No subject listed'}</p>
+                <div key={tutor.id} style={{marginBottom:8}}>
+                  <strong>{tutor.name}</strong>
+                  <div style={{color:'#888', fontSize:'0.95rem'}}>{tutor.subject || 'No subject listed'}</div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-600">No tutors match your search.</p>
+              <p>No tutors match your search.</p>
             )}
           </div>
-
-          {/* My Progress */}
-          <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-            <h2 className="font-semibold text-lg mb-2">My Progress</h2>
-            <p className="text-gray-600">Track your learning and goals.</p>
+          <div className="card">
+            <h2>My Progress</h2>
+            <p>Track your learning and goals.</p>
+          </div>
+          <div className="card">
+            <h2>Session History</h2>
+            <div style={{textAlign:'left', width:'100%'}}>
+              {[{id:1, tutor:'Ms. Jane Doe', date:'2025-09-20', topic:'Algebra'}, {id:2, tutor:'Mr. John Smith', date:'2025-09-15', topic:'Essay Writing'}].map(session => (
+                <div key={session.id} style={{marginBottom:8, borderBottom:'1px solid #eee', paddingBottom:6}}>
+                  <strong>{session.tutor}</strong> <span style={{color:'#888'}}>{session.date}</span>
+                  <div style={{fontSize:'0.95rem', color:'#2563eb'}}>{session.topic}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

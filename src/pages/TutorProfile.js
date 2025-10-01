@@ -9,6 +9,7 @@ function TutorProfile() {
     availability: '',
     hourlyRate: '',
   });
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -31,6 +32,17 @@ function TutorProfile() {
     }));
   };
 
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleUpdateProfile = async () => {
     try {
       await axios.put('http://localhost:3000/api/tutors/', profile); // Replace `1` with dynamic tutor ID
@@ -46,7 +58,32 @@ function TutorProfile() {
       <div className="min-h-screen bg-gray-100 p-6 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Tutor Profile</h1>
 
-        <div className="bg-white p-6 rounded shadow-md">
+        <div className="profile-form bg-white p-6 rounded shadow-md">
+          <div style={{ textAlign: 'center', marginBottom: 18 }}>
+            <img
+              src={
+                avatar ||
+                'https://ui-avatars.com/api/?name=' +
+                  encodeURIComponent(profile.name)
+              }
+              alt="Avatar"
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+              }}
+            />
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                style={{ marginTop: 8 }}
+              />
+            </div>
+          </div>
           <label className="block mb-2 font-semibold">Name</label>
           <input
             type="text"

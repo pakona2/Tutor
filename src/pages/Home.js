@@ -1,29 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './pages.css';
 
 
 
 function Home() {
   return (
-    <div className="font-sans text-gray-800">
+    <div className="landing-container">
 
       {/* Hero Section */}
-      <section className="bg-cover bg-center text-white py-24 px-6" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1584697964154-0d94d3f3a940?auto=format&fit=crop&w=1600&q=80')` }}>
-        <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">TutorConnect</h1>
-          <p className="text-xl mb-6">Find the perfect tutor or become one — in just a few clicks.</p>
+      <section className="hero-section" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1584697964154-0d94d3f3a940?auto=format&fit=crop&w=1600&q=80')` }}>
+        <div className="hero-content">
           <Link to="/Login">
-            <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-md text-white text-lg font-semibold">
-              Get Started
-            </button>
+            <button className="button" style={{marginBottom: '32px'}}>Get Started</button>
           </Link>
+          <h1 className="hero-title">TutorConnect</h1>
+          <p className="hero-subtitle">Find the perfect tutor or become one — in just a few clicks.</p>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-6 bg-white text-center">
-        <h2 className="text-3xl font-bold mb-10">Why Choose Us?</h2>
-        <div className="flex flex-wrap justify-center gap-8">
+      <section className="features-section">
+        <h2 className="section-title">Why Choose Us?</h2>
+        <div className="features-list">
           <FeatureCard
             image="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             title="Qualified Tutors"
@@ -43,11 +42,11 @@ function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 px-6 bg-gray-100">
-        <h2 className="text-3xl font-bold text-center mb-10">How It Works</h2>
-        <div className="flex flex-wrap justify-center gap-10">
+      <section className="how-section">
+        <h2 className="section-title">How It Works</h2>
+        <div className="steps-list">
           <StepCard
-            image="https://c:\Users\User\Pictures\FB_IMG_16902272581146454.jpg"
+            image="https://images.unsplash.com/photo-1611974789857-9c7d53c74f88?auto=format&fit=crop&w=600&q=80"
             title="1. Sign Up"
             description="Create your free account as a student or tutor."
           />
@@ -64,8 +63,33 @@ function Home() {
         </div>
       </section>
 
+      {/* Teachers Section */}
+      <section className="teachers-section">
+        <h2 className="section-title">Meet Our Teachers</h2>
+        <div className="teachers-list">
+          <TeacherCard
+            image="/src/assets/1.jpg"
+            name="Ms. Jane Doe"
+            subject="Mathematics"
+            bio="Passionate about making math fun and accessible for all ages."
+          />
+          <TeacherCard
+            image="/src/assets/image.png"
+            name="Mr. John Smith"
+            subject="English Literature"
+            bio="Bringing stories to life and helping students find their voice."
+          />
+          <TeacherCard
+            image="/src/assets/imag.png"
+            name="Mrs. Emily Brown"
+            subject="Science"
+            bio="Exploring the wonders of the world through hands-on learning."
+          />
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="py-6 text-center text-sm text-gray-500">
+      <footer className="footer">
         © {new Date().getFullYear()} TutorConnect. All rights reserved. Mr.BT
       </footer>
     </div>
@@ -73,20 +97,27 @@ function Home() {
 }
 
 const FeatureCard = ({ image, title, description }) => (
-  <div className="w-64 text-center">
-    <img src={image} alt={title} className="w-16 h-16 mx-auto mb-4" />
-    <h3 className="text-xl font-semibold mb-2">{title}</h3>
-    <p className="text-gray-600">{description}</p>
+  <div className="feature-card">
+    <img src={image} alt={title} className="feature-photo" />
+    <h3 className="feature-title">{title}</h3>
+    <p className="feature-desc">{description}</p>
   </div>
 );
 
 const StepCard = ({ image, title, description }) => (
-  <div className="w-72 bg-white rounded-lg overflow-hidden shadow-lg">
-    <img src={image} alt={title} className="w-full h-48 object-cover" />
-    <div className="p-4">
-      <h4 className="font-bold text-lg mb-2">{title}</h4>
-      <p className="text-gray-600">{description}</p>
-    </div>
+  <div className="step-card">
+    <img src={image} alt={title} className="step-photo" />
+    <h4 className="step-title">{title}</h4>
+    <p className="step-desc">{description}</p>
+  </div>
+);
+
+const TeacherCard = ({ image, name, subject, bio }) => (
+  <div className="teacher-card">
+    <img src={image} alt={name} className="teacher-photo" />
+    <h3 className="teacher-name">{name}</h3>
+    <p className="teacher-subject">{subject}</p>
+    <p className="teacher-bio">{bio}</p>
   </div>
 );
 

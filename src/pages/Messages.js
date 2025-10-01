@@ -1,40 +1,57 @@
-import React, { useState, useEffect, Text, View, ScrollView, ActivityIndicator } from 'react';
-import axios from 'axios';
 
+import React, { useState, useEffect } from 'react';
 
-const Messages = ({ userId }) => {
+const Messages = () => {
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [newMessage, setNewMessage] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/messages/${userId}`)
-      .then((response) => {
-        setMessages(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching messges:', error);
-        setLoading(false);
-      });
-    },[userId]);
+    // Load messages from localStorage
+    const stored = JSON.parse(localStorage.getItem('messages') || '[]');
+    setMessages(stored);
+  }, []);
 
-    if(loading) {
-      return <ActivityIndicator size="large" color="0000" style={{marginTop:40}}/>;
-    }
-
-    return (
-      <ScrollView style={ styles.container }>
-        <Text style={styles.header}>Messages</Text>
-        {messages.map(msg=>(
-          <View key={msg.id} style={styles.messageBox}>
-            <Text style={styles.sender}>{msg.sender_id===userId?'You': `User ${msg.sender_id}`}:</Text>
-            <Text style={styles.message}>{msg.message}</Text>
-            <Text style={styles.time}>{new Date(msg.timestamp).toLocaleString()}</Text>
-          </View>
-        ))}
-      </ScrollView>
-    );
+  const handleSendMessage = () => {
+    if (!newMessage.trim()) return;
+    const msg = {
+      id: Date.now(),
+      sender: 'You',
+      message: newMessage,
+      timestamp: new Date().toLocaleString()
+    };
+    const updated = [...messages, msg];
+    setMessages(updated);
+    localStorage.setItem('messages', JSON.stringify(updated));
+    setNewMessage('');
   };
+
+  return (
+    <div className="card" style={{marginTop: 24}}>
+      <h2 style={{marginBottom: 16}}>Messages</h2>
+      <div style={{maxHeight: 200, overflowY: 'auto', marginBottom: 16}}>
+        {messages.length === 0 ? (
+          <p style={{color:'#888'}}>No messages yet.</p>
+        ) : (
+          messages.map(msg => (
+            <div key={msg.id} style={{marginBottom: 12, borderBottom: '1px solid #eee', paddingBottom: 8}}>
+              <strong>{msg.sender}:</strong> <span>{msg.message}</span>
+              <div style={{fontSize: '0.85rem', color: '#999'}}>{msg.timestamp}</div>
+            </div>
+          ))
+        )}
+      </div>
+      <input
+        type="text"
+        className="input"
+        placeholder="Type a message..."
+        value={newMessage}
+        onChange={e => setNewMessage(e.target.value)}
+        style={{marginBottom: 8}}
+      />
+      <button className="button" style={{width: 'auto', padding: '8px 20px'}} onClick={handleSendMessage}>Send</button>
+    </div>
+  );
+};
 
     
 const styles = {

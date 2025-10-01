@@ -1,5 +1,5 @@
+
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
@@ -16,12 +16,6 @@ app.use('/api', sessionRoutes);
 app.use('/api', messageRoutes);
 
 const PORT = process.env.PORT || 3005;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/tutor-app';
-
-mongoose.connect('mongodb+srv://gift:2002@cluster0.i8kqrfw.mongodb.net/SoulSwipe?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => console.error('MongoDB connection error:', err));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

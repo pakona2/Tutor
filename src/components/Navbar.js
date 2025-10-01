@@ -11,24 +11,24 @@ function Navbar({ role }) {
   };
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-      
-      <div className="space-x-6 text-sm font-medium">
+    <nav className="navbar">
+      <div className="navbar-left">
+        <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} className="navbar-logo">My Teacher App</Link>
+      </div>
+      <div className="navbar-right">
         {role === 'tutor' && (
           <>
-            <Link to="/tutor-dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-            <Link to="/tutor-profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
-            <Link to="/tutor-sessions" className="text-gray-700 hover:text-blue-600">My Sessions</Link>
+            <Link to="/tutor-profile" className="navbar-link">Profile</Link>
+            <Link to="/tutor-sessions" className="navbar-link">My Sessions</Link>
           </>
         )}
         {role === 'student' && (
           <>
-            <Link to="/student-dashboard" className="text-gray-700 hover:text-blue-600">Dashboard</Link>
-            <Link to="/student-profile" className="text-gray-700 hover:text-blue-600">Profile</Link>
-            <Link to="/book-session" className="text-gray-700 hover:text-blue-600">Book Session</Link>
+            <Link to="/student-profile" className="navbar-link">Profile</Link>
+            <Link to="/book-session" className="navbar-link">Book Session</Link>
           </>
         )}
-        <button onClick={handleLogout} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</button>
+        <button onClick={handleLogout} className="navbar-logout">Logout</button>
       </div>
     </nav>
   );

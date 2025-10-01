@@ -150,79 +150,62 @@ function BookSession() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <div className="mb-4">
-            <label className="block mb-2 font-semibold text-gray-700">Select Tutor</label>
-            <select
-              name="tutorId"
-              value={form.tutorId}
-              onChange={handleChange}
-              className={`w-full p-2 border rounded ${errors.tutorId ? 'border-red-500' : 'border-gray-300'}`}
-              disabled={loading.tutors}
-            >
-              <option value="">-- Select Tutor --</option>
-              {loading.tutors ? (
-                <option disabled>Loading tutors...</option>
-              ) : (
-                tutors.map((tutor) => (
-                  <option key={tutor.id} value={tutor.id}>
-                    {tutor.name} ({tutor.email})
-                  </option>
-                ))
-              )}
-            </select>
-            {errors.tutorId && <p className="mt-1 text-red-500 text-sm">{errors.tutorId}</p>}
-          </div>
+        <form onSubmit={handleSubmit} className="profile-form">
+          <label>Select Tutor</label>
+          <select
+            name="tutorId"
+            value={form.tutorId}
+            onChange={handleChange}
+            disabled={loading.tutors}
+          >
+            <option value="">-- Select Tutor --</option>
+            {loading.tutors ? (
+              <option disabled>Loading tutors...</option>
+            ) : (
+              tutors.map((tutor) => (
+                <option key={tutor.id} value={tutor.id}>
+                  {tutor.name} ({tutor.email})
+                </option>
+              ))
+            )}
+          </select>
+          {errors.tutorId && <p className="error">{errors.tutorId}</p>}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700">Date</label>
+          <div style={{display:'flex', gap:16}}>
+            <div style={{flex:1}}>
+              <label>Date</label>
               <input
                 type="date"
                 name="date"
                 value={form.date}
                 onChange={handleChange}
                 min={today}
-                className={`w-full p-2 border rounded ${errors.date ? 'border-red-500' : 'border-gray-300'}`}
               />
-              {errors.date && <p className="mt-1 text-red-500 text-sm">{errors.date}</p>}
+              {errors.date && <p className="error">{errors.date}</p>}
             </div>
-
-            <div>
-              <label className="block mb-2 font-semibold text-gray-700">Time</label>
+            <div style={{flex:1}}>
+              <label>Time</label>
               <input
                 type="time"
                 name="time"
                 value={form.time}
                 onChange={handleChange}
-                className={`w-full p-2 border rounded ${errors.time ? 'border-red-500' : 'border-gray-300'}`}
               />
-              {errors.time && <p className="mt-1 text-red-500 text-sm">{errors.time}</p>}
+              {errors.time && <p className="error">{errors.time}</p>}
             </div>
           </div>
 
-          <div className="mb-4">
-            <label className="block mb-2 font-semibold text-gray-700">Topic</label>
-            <input
-              type="text"
-              name="topic"
-              value={form.topic}
-              onChange={handleChange}
-              placeholder="What do you want to learn?"
-              className={`w-full p-2 border rounded ${errors.topic ? 'border-red-500' : 'border-gray-300'}`}
-            />
-            {errors.topic && <p className="mt-1 text-red-500 text-sm">{errors.topic}</p>}
-          </div>
+          <label>Topic</label>
+          <input
+            type="text"
+            name="topic"
+            value={form.topic}
+            onChange={handleChange}
+            placeholder="What do you want to learn?"
+          />
+          {errors.topic && <p className="error">{errors.topic}</p>}
 
-          <button
-            type="submit"
-            disabled={submitStatus.loading}
-            className={`w-full bg-blue-600 text-white py-3 rounded-lg font-medium transition-colors ${
-              submitStatus.loading 
-                ? 'opacity-50 cursor-not-allowed' 
-                : 'hover:bg-blue-700 hover:shadow-md'
-            }`}
-          >
+          <button type="submit" disabled={submitStatus.loading}>
             {submitStatus.loading ? 'Booking Session...' : 'Book Session'}
           </button>
         </form>
@@ -230,24 +213,22 @@ function BookSession() {
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">My Booked Sessions</h2>
 
         {loading.bookings ? (
-          <div className="flex justify-center py-8">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+          <div style={{textAlign:'center', padding:'32px 0'}}>
+            <div className="animate-spin" style={{width:40, height:40, border:'4px solid #2563eb', borderTop:'4px solid #fff', borderRadius:'50%', margin:'0 auto'}}></div>
           </div>
         ) : bookings.length === 0 ? (
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
-            <p className="text-gray-600 mb-4">You haven't booked any sessions yet.</p>
-            <p className="text-gray-500">Book your first session using the form above!</p>
+          <div className="booked-session-card">
+            <p>You haven't booked any sessions yet.</p>
+            <p style={{color:'#888'}}>Book your first session using the form above!</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div>
             {bookings.map((booking) => (
-              <div key={booking.id} className="bg-white p-5 rounded-lg shadow-md border-l-4 border-blue-500">
-                <div className="mb-3">
-                  <p className="font-semibold text-gray-800">Tutor: <span className="font-normal">{booking.tutor_name || booking.tutorId}</span></p>
-                  <p className="font-semibold text-gray-800">Date: <span className="font-normal">{booking.session_time ? booking.session_time.split('T')[0] : ''}</span></p>
-                  <p className="font-semibold text-gray-800">Time: <span className="font-normal">{booking.session_time ? booking.session_time.split('T')[1].slice(0,5) : ''}</span></p>
-                  <p className="font-semibold text-gray-800">Topic: <span className="font-normal">{booking.topic}</span></p>
-                </div>
+              <div key={booking.id} className="booked-session-card">
+                <p><span className="session-label">Tutor:</span> {booking.tutor_name || booking.tutorId}</p>
+                <p><span className="session-label">Date:</span> {booking.session_time ? booking.session_time.split('T')[0] : ''}</p>
+                <p><span className="session-label">Time:</span> {booking.session_time ? booking.session_time.split('T')[1].slice(0,5) : ''}</p>
+                <p><span className="session-label">Topic:</span> {booking.topic}</p>
                 <ApprovedSessionActions session={booking} />
               </div>
             ))}

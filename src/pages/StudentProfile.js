@@ -7,10 +7,22 @@ function StudentProfile() {
     email: '',
     goals: '',
   });
+  const [avatar, setAvatar] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSave = () => {
@@ -24,38 +36,42 @@ function StudentProfile() {
       <div className="min-h-screen bg-blue-50 p-6 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
 
-        <div className="bg-white p-6 rounded shadow-md">
-          <label className="block mb-2 font-semibold"> Your Name</label>
+        <div className="profile-form">
+          <div style={{textAlign:'center', marginBottom:18}}>
+            <img
+              src={avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(profile.name)}
+              alt="Avatar"
+              style={{width:80, height:80, borderRadius:'50%', objectFit:'cover', boxShadow:'0 2px 8px rgba(0,0,0,0.07)'}}
+            />
+            <div>
+              <input type="file" accept="image/*" onChange={handleAvatarChange} style={{marginTop:8}} />
+            </div>
+          </div>
+          <label> Your Name</label>
           <input
             type="text"
             name="name"
             value={profile.name}
             onChange={handleChange}
-            className="w-full p-2 border rounded mb-4"
           />
 
-          <label className="block mb-2 font-semibold">Email</label>
+          <label>Email</label>
           <input
             type="email"
             name="email"
             value={profile.email}
             onChange={handleChange}
-            className="w-full p-2 border rounded mb-4"
           />
 
-          <label className="block mb-2 font-semibold">What do yo want to learn?</label>
+          <label>What do you want to learn?</label>
           <textarea
             name="goals"
             value={profile.goals}
             onChange={handleChange}
             rows={4}
-            className="w-full p-2 border rounded mb-4"
           />
 
-          <button
-            onClick={handleSave}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
+          <button onClick={handleSave}>
             Save Profile
           </button>
         </div>
