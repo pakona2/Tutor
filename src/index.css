@@ -36,6 +36,15 @@
 .navbar-mobile-menu {
   display: none;
 }
+
+@media (max-width: 700px) {
+  .navbar-mobile-menu {
+    display: block !important;
+  }
+  .navbar-dropdown {
+    display: flex !important;
+  }
+}
 html.dark, body.dark {
   background: #18181b !important;
   color: #f3f4f6 !important;

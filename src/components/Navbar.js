@@ -28,7 +28,7 @@ function Navbar({ role }) {
   return (
     <nav className={`navbar ${darkMode ? 'dark' : ''}`}> 
       <div className="navbar-left">
-        <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} className="navbar-logo">MyTeacher App</Link>
+        <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} className="navbar-logo">Home</Link>
       </div>
       <div className="navbar-right desktop-menu">
         <button onClick={toggleDarkMode} className="navbar-link" style={{marginRight:12}}>
