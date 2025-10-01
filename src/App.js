@@ -46,13 +46,13 @@ function App() {
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         <Route path="/student-profile" element={<StudentProfile />} />
-        <Route path="/tutor-profile" element={<TutorProfile />} />
+  <Route path="/tutor-profile/:tutorId" element={<TutorProfile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/book-session" element={<BookSession />} /> 
         <Route path="/tutor-sessions" element={<TutorSessions />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/tutor-search" element={<TutorSearch />} />ss
+  <Route path="/tutor-search" element={<TutorSearch />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

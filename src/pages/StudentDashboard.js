@@ -1,31 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import API from '../api';
-import {Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './pages.css';
 import NotificationBar from '../components/NotificationBar';
 
 function StudentDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [tutors, setTutors] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState('Welcome to your dashboard!');
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    API.get('/tutors')
-      .then((res) => {
-        setTutors(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setTutors([]);
-        setLoading(false);
-      });
-  }, []);
+  // Progress tracker state
+  const [goals, setGoals] = useState(() => {
+    // Load from localStorage or use default
+    return JSON.parse(localStorage.getItem('student_goals') || '[]');
+  });
+  const [goalInput, setGoalInput] = useState('');
 
-  const filteredTutors = tutors.filter((tutor) =>
-    `${tutor.name} ${tutor.subject || ''}`.toLowerCase().includes(searchTerm.toLowerCase())
+  // Sample tutors list
+  const sampleTutors = [
+    { id: 1, name: 'Ms. Jane Doe', subject: 'Mathematics' },
+    { id: 2, name: 'Mr. John Smith', subject: 'English Literature' },
+    { id: 3, name: 'Mrs. Emily Brown', subject: 'Science' },
+    { id: 4, name: 'Dr. Alex Kim', subject: 'Physics' },
+    { id: 5, name: 'Prof. Sara Lee', subject: 'Poetry' }
+  ];
+
+  const filteredTutors = sampleTutors.filter((tutor) =>
+    `${tutor.name} ${tutor.subject}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Add a new goal
+  const handleAddGoal = () => {
+    if (!goalInput.trim()) return;
+    const updated = [...goals, { text: goalInput, completed: false }];
+    setGoals(updated);
+    localStorage.setItem('student_goals', JSON.stringify(updated));
+    setGoalInput('');
+  };
+
+  // Mark goal as completed
+  const handleToggleGoal = idx => {
+    const updated = goals.map((g, i) => i === idx ? { ...g, completed: !g.completed } : g);
+    setGoals(updated);
+    localStorage.setItem('student_goals', JSON.stringify(updated));
+  };
 
   return (
     <div>
@@ -42,29 +61,92 @@ function StudentDashboard() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-bar"
         />
+        <button type="submit" className="button" style={{marginTop:8, marginBottom:16}}>Search</button>
         <div className="cards-grid">
           <div className="card">
             <h2>Upcoming Sessions</h2>
-            <p>You have 2 sessions scheduled this week.</p>
+            {/* Interactive upcoming sessions list */}
+            <div style={{width:'100%', textAlign:'left'}}>
+              {[
+                {id:1, tutor:'Ms. Jane Doe', date:'2025-10-03', time:'10:00', topic:'Algebra', attended: false},
+                {id:2, tutor:'Mr. John Smith', date:'2025-10-05', time:'14:00', topic:'Essay Writing', attended: false}
+              ].map((session, idx) => (
+                <div key={session.id} style={{marginBottom:12, borderBottom:'1px solid #eee', paddingBottom:8, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                  <div>
+                    <strong>{session.tutor}</strong> <span style={{color:'#888'}}>{session.date} {session.time}</span>
+                    <div style={{fontSize:'0.95rem', color:'#2563eb'}}>{session.topic}</div>
+                  </div>
+                  <button
+                    className="button"
+                    style={{padding:'6px 12px', fontSize:'0.95rem', background:'#22c55e', color:'#fff', borderRadius:6, marginLeft:8}}
+                    disabled={session.attended}
+                  >
+                    {session.attended ? 'Attended' : 'Mark Attended'}
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="card">
             <h2>Available Tutors</h2>
-            {loading ? (
-              <p>Loading tutors...</p>
-            ) : filteredTutors.length > 0 ? (
-              filteredTutors.map((tutor) => (
-                <div key={tutor.id} style={{marginBottom:8}}>
-                  <strong>{tutor.name}</strong>
-                  <div style={{color:'#888', fontSize:'0.95rem'}}>{tutor.subject || 'No subject listed'}</div>
-                </div>
-              ))
-            ) : (
-              <p>No tutors match your search.</p>
-            )}
+            <button
+              className="button"
+              style={{width:'100%', padding:'12px', fontSize:'1rem'}}
+              onClick={() => navigate('/tutor-search')}
+            >
+              Find Tutors
+            </button>
           </div>
           <div className="card">
             <h2>My Progress</h2>
-            <p>Track your learning and goals.</p>
+            {/* Progress Bar Visualization */}
+            <div style={{width:'100%', marginBottom:12}}>
+              {goals.length > 0 && (
+                <div style={{marginBottom:8}}>
+                  <div style={{height:18, background:'#e5e7eb', borderRadius:10, overflow:'hidden', position:'relative'}}>
+                    <div style={{
+                      width: `${Math.round(100 * goals.filter(g => g.completed).length / goals.length)}%`,
+                      background:'#2563eb',
+                      height:'100%',
+                      borderRadius:10,
+                      transition:'width 0.3s'
+                    }}></div>
+                    <span style={{position:'absolute', left:'50%', top:0, transform:'translateX(-50%)', color:'#fff', fontWeight:'bold', fontSize:'0.95rem'}}>
+                      {Math.round(100 * goals.filter(g => g.completed).length / goals.length)}%
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div style={{width:'100%', textAlign:'left'}}>
+              <ul style={{marginBottom:12, paddingLeft:0}}>
+                {goals.length === 0 ? (
+                  <li style={{color:'#888'}}>No goals yet.</li>
+                ) : (
+                  goals.map((goal, idx) => (
+                    <li key={idx} style={{marginBottom:8, display:'flex', alignItems:'center'}}>
+                      <input
+                        type="checkbox"
+                        checked={goal.completed}
+                        onChange={() => handleToggleGoal(idx)}
+                        style={{marginRight:8}}
+                      />
+                      <span style={{textDecoration: goal.completed ? 'line-through' : 'none', color: goal.completed ? '#888' : '#222'}}>{goal.text}</span>
+                    </li>
+                  ))
+                )}
+              </ul>
+              <div style={{display:'flex', gap:8}}>
+                <input
+                  type="text"
+                  value={goalInput}
+                  onChange={e => setGoalInput(e.target.value)}
+                  placeholder="Add a new goal..."
+                  style={{flex:1, padding:'8px', borderRadius:8, border:'1px solid #cbd5e1'}}
+                />
+                <button className="button" style={{padding:'8px 16px', width:'auto'}} onClick={handleAddGoal}>Add</button>
+              </div>
+            </div>
           </div>
           <div className="card">
             <h2>Session History</h2>
@@ -78,6 +160,7 @@ function StudentDashboard() {
             </div>
           </div>
         </div>
+        {/* Removed direct Messages chat from dashboard. Messaging is now per tutor profile. */}
       </div>
     </div>
   );
