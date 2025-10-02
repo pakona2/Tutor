@@ -99,30 +99,19 @@ function Navbar({ role }) {
         </button>
         {menuOpen && (
           <div className="navbar-dropdown">
-            <select value={lang} onChange={handleLangChange} className="navbar-link" style={{marginBottom:8,padding:'4px 8px',borderRadius:6}}>
-              <option value="en">EN</option>
-              <option value="es">ES</option>
-              <option value="fr">FR</option>
-              <option value="de">DE</option>
-                <option value="ny">Chichewa</option>
-                <option value="sw">Swahili</option>
-            </select>
-            <Link to="/referral" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Referral Program</Link>
-            <button onClick={toggleDarkMode} className="navbar-link" style={{marginBottom:8}}>
-              {darkMode ? 'Light Mode' : 'Dark Mode'}
-            </button>
-            <Link to="/help" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Help Center</Link>
+            <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Home</Link>
             {role === 'tutor' && (
               <>
-                <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+                <Link to="/tutor-sessions" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>My Sessions</Link>
+                <Link to="/tutor-upload" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Upload Tutorials</Link>
               </>
             )}
             {role === 'student' && (
               <>
-                <Link to="/student-profile" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+                <Link to="/book-session" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Book Session</Link>
+                <Link to="/student-tutorials" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Tutorials</Link>
               </>
             )}
-            <button onClick={() => {handleLogout(); setMenuOpen(false);}} className="navbar-logout">Logout</button>
           </div>
         )}
       </div>
