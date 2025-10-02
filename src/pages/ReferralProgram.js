@@ -24,10 +24,12 @@ function ReferralProgram({ lang = 'en' }) {
         <p className="mb-4">{t('referralDescription', lang)}</p>
         <div className="mb-4">
           <input type="text" value={referralLink} readOnly className="input w-full mb-2" />
-          <button className="button" onClick={handleCopy} style={{marginRight:8}}>{copied ? 'Copied!' : t('inviteFriends', lang)}</button>
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="button" style={{background:'#25D366',color:'#fff',marginRight:8}}>Share on WhatsApp</a>
-          <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="button" style={{background:'#4267B2',color:'#fff',marginRight:8}}>Share on Facebook</a>
-          <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="button" style={{background:'#E1306C',color:'#fff'}}>Share on Instagram</a>
+          <div style={{display:'flex',flexWrap:'wrap',gap:'10px'}}>
+            <button className="button" onClick={handleCopy} style={{background:'#6366f1',color:'#fff'}}>{copied ? 'Copied!' : t('inviteFriends', lang)}</button>
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="button" style={{background:'#25D366',color:'#fff'}}>WhatsApp</a>
+            <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="button" style={{background:'#4267B2',color:'#fff'}}>Facebook</a>
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="button" style={{background:'#E1306C',color:'#fff'}}>Instagram</a>
+          </div>
         </div>
         <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900 rounded-lg text-blue-800 dark:text-blue-200 font-semibold text-center">
           <span>After sharing, you and your friend will each receive a free session credit when your friend registers using your link!</span>
