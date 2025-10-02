@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 //import socket from './socket'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
+import StudentTutorials from './pages/tutorials/StudentTutorials';
+import TutorUpload from './pages/tutorials/TutorUpload';
 import HelpCenter from './pages/help/HelpCenter';
 import TermsAndConditions from './pages/help/TermsAndConditions';
 import Login from './pages/Login';
@@ -55,9 +57,11 @@ function App() {
         <Route path="/tutor-sessions" element={<TutorSessions />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/tutor-search" element={<TutorSearch />} />
-        <Route path="/help" element={<HelpCenter />} />
-        <Route path="/terms" element={<TermsAndConditions />} />
-        <Route path="/" element={<Home />} />
+  <Route path="/help" element={<HelpCenter />} />
+  <Route path="/terms" element={<TermsAndConditions />} />
+  <Route path="/student-tutorials" element={<StudentTutorials />} />
+  <Route path="/tutor-upload" element={<TutorUpload />} />
+  <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

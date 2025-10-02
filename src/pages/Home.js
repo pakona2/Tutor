@@ -7,7 +7,7 @@ import './pages.css';
 function Home() {
   return (
     <div className="landing-container" style={{ background: '#f9fafb', minHeight: '100vh' }}>
-
+      
       {/* Hero Section */}
       <section className="hero-section" style={{ position: 'relative', backgroundImage: `url('https://images.unsplash.com/photo-1584697964154-0d94d3f3a940?auto=format&fit=crop&w=1600&q=80')` }}>
         <div style={{
@@ -77,19 +77,19 @@ function Home() {
         <div className="teachers-list">
           <TeacherCard
             image={require('../assets/1.jpg')}
-            name="Ms. Jane Doe"
+            name="Mr. Gift Chimwaza"
             subject="Mathematics"
             bio="Passionate about making math fun and accessible for all ages."
           />
           <TeacherCard
             image={require('../assets/image.png')}
-            name="Mr. John Smith"
+            name="Mr. John Banda"
             subject="English Literature"
             bio="Bringing stories to life and helping students find their voice."
           />
           <TeacherCard
             image={require('../assets/imag.png')}
-            name="Mrs. Emily Brown"
+            name="Mrs. Emily Waya"
             subject="Science"
             bio="Exploring the wonders of the world through hands-on learning."
           />

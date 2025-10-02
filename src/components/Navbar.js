@@ -29,6 +29,18 @@ function Navbar({ role }) {
     <nav className={`navbar ${darkMode ? 'dark' : ''}`}> 
       <div className="navbar-left">
         <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} className="navbar-logo">Home</Link>
+        {role === 'tutor' && (
+          <>
+            <Link to="/tutor-sessions" className="navbar-link">My Sessions</Link>
+            <Link to="/tutor-upload" className="navbar-link">Upload Tutorials</Link>
+          </>
+        )}
+        {role === 'student' && (
+          <>
+          <Link to="/book-session" className="navbar-link">Book Session</Link>
+          <Link to="/student-tutorials" className="navbar-link">Tutorials & Papers</Link>
+          </>
+        )}
       </div>
       <div className="navbar-right desktop-menu">
         <button onClick={toggleDarkMode} className="navbar-link" style={{marginRight:12}}>
@@ -38,18 +50,27 @@ function Navbar({ role }) {
         {role === 'tutor' && (
           <>
             <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link">Profile</Link>
-            <Link to="/tutor-sessions" className="navbar-link">My Sessions</Link>
+            
           </>
         )}
         {role === 'student' && (
           <>
             <Link to="/student-profile" className="navbar-link">Profile</Link>
-            <Link to="/book-session" className="navbar-link">Book Session</Link>
+                    
           </>
         )}
         <button onClick={handleLogout} className="navbar-logout">Logout</button>
       </div>
       <div className="navbar-mobile-menu">
+        {role === 'tutor' && (
+          <>
+            <Link to="/tutor-sessions" className="navbar-link">My Sessions</Link>
+            <Link to="/tutor-upload" className="navbar-link">Upload Tutorials</Link>
+          </>
+        )}
+        {role === 'student' && (
+          <Link to="/book-session" className="navbar-link">Book Session</Link>
+        )}
         <button className="navbar-hamburger" onClick={() => setMenuOpen(m => !m)}>
           <span style={{fontSize:'2rem'}}>&#9776;</span>
         </button>
@@ -62,13 +83,13 @@ function Navbar({ role }) {
             {role === 'tutor' && (
               <>
                 <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
-                <Link to="/tutor-sessions" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>My Sessions</Link>
+                <Link to="/tutor-upload" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Upload Tutorials</Link>
               </>
             )}
             {role === 'student' && (
               <>
                 <Link to="/student-profile" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Profile</Link>
-                <Link to="/book-session" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Book Session</Link>
+                <Link to="/student-tutorials" className="navbar-link" style={{marginBottom:8}} onClick={()=>setMenuOpen(false)}>Tutorials & Papers</Link>
               </>
             )}
             <button onClick={() => {handleLogout(); setMenuOpen(false);}} className="navbar-logout">Logout</button>
