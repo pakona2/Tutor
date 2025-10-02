@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 //import socket from './socket'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
+import ReferralProgram from './pages/ReferralProgram';
 import StudentTutorials from './pages/tutorials/StudentTutorials';
 import TutorUpload from './pages/tutorials/TutorUpload';
 import HelpCenter from './pages/help/HelpCenter';
@@ -44,7 +45,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
+  <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
@@ -61,6 +62,7 @@ function App() {
   <Route path="/terms" element={<TermsAndConditions />} />
   <Route path="/student-tutorials" element={<StudentTutorials />} />
   <Route path="/tutor-upload" element={<TutorUpload />} />
+  <Route path="/referral" element={<ReferralProgram />} />
   <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
