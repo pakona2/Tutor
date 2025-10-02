@@ -39,7 +39,7 @@ function TutorUpload() {
         {message && <div className="mb-4 text-green-600 dark:text-green-400 font-semibold">{message}</div>}
         <form onSubmit={handleVideoUpload} className="mb-8" style={{display:'flex',flexDirection:'column',gap:12}}>
           <h2 className="text-xl font-semibold mb-2">Upload Tutorial Video</h2>
-          <input type="text" placeholder="Video Title" value={videoTitle} onChange={e => setVideoTitle(e.target.value)} className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} />
+          <input type="text" placeholder="Tutorial Title" value={videoTitle} onChange={e => setVideoTitle(e.target.value)} className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} />
           <input type="url" placeholder="Video URL (mp4, webm, etc)" value={videoUrl} onChange={e => setVideoUrl(e.target.value)} className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} />
           <input type="file" accept="video/*" className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} onChange={e => {
             const file = e.target.files[0];
@@ -51,16 +51,16 @@ function TutorUpload() {
           {/* Video preview for current upload */}
           {videoUrl && (
             <div className="mb-4">
-              <label className="block mb-1 font-semibold">Video Preview:</label>
+              <label className="block mb-1 font-semibold">Preview:</label>
               <video controls width="100%" src={videoUrl} style={{borderRadius:8,background:'#000'}} />
             </div>
           )}
-          <button type="submit" className="button" style={{padding:12,fontSize:'1rem',borderRadius:8}}>Upload Video</button>
+          <button type="submit" className="button" style={{padding:12,fontSize:'1rem',borderRadius:8}}>Upload</button>
         </form>
         {/* Past video previews */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Past Video Previews</h2>
-          {pastVideos.length === 0 ? <p>No past videos uploaded.</p> : (
+          {pastVideos.length === 0 ? <p>No Tutorials available.</p> : (
             <div className="video-list grid grid-cols-1 gap-4">
               {pastVideos.map((vid, idx) => (
                 <div key={idx} className="mb-2 bg-gray-100 dark:bg-gray-900 rounded-lg p-2 shadow">
@@ -72,7 +72,7 @@ function TutorUpload() {
           )}
         </div>
         <form onSubmit={handlePaperUpload} style={{display:'flex',flexDirection:'column',gap:12}}>
-          <h2 className="text-xl font-semibold mb-2">Upload Exam Paper</h2>
+          <h2 className="text-xl font-semibold mb-2">Upload Paper</h2>
           <input type="text" placeholder="Paper Title" value={paperTitle} onChange={e => setPaperTitle(e.target.value)} className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} />
           <input type="url" placeholder="Paper URL (PDF, DOCX, etc)" value={paperUrl} onChange={e => setPaperUrl(e.target.value)} className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} />
           <input type="file" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" className="input" style={{padding:12,fontSize:'1rem',borderRadius:8}} onChange={e => {
@@ -82,7 +82,7 @@ function TutorUpload() {
               setPaperUrl(url);
             }
           }} />
-          <button type="submit" className="button" style={{padding:12,fontSize:'1rem',borderRadius:8}}>Upload Paper</button>
+          <button type="submit" className="button" style={{padding:12,fontSize:'1rem',borderRadius:8}}>Upload</button>
         </form>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+//import Navbar from '../components/Navbar';
 import API from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import './pages.css';
@@ -83,7 +83,7 @@ function StudentDashboard() {
 
   return (
     <div>
-      <Navbar role="student" />
+      {/*<Navbar role="student" />*/}
       {/* NotificationBar only appears when there is a notification */}
       {notification && (
         <NotificationBar message={notification} type="info" onClose={() => setNotification('')} />
@@ -204,3 +204,4 @@ function StudentDashboard() {
 }
 
 export default StudentDashboard;
+

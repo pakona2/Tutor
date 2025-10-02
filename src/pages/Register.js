@@ -100,7 +100,7 @@ function Register() {
             <option value="tutor">Tutor</option>
           </select>
 
-          <div style={{margin:'16px 0'}}>
+          <div style={{margin:'10px', textAlign:'l'}}>
             <label style={{display:'flex', alignItems:'center', fontSize:'0.98rem'}}>
               <input
                 type="checkbox"

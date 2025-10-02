@@ -1,5 +1,6 @@
+
 import React,{ useState, useEffect, View } from 'react';
-import Navbar from '../components/Navbar.js';
+//import Navbar from '../components/Navbar.js';
 import API from '../api';
 import Messages from './Messages.js';
 import './pages.css';
@@ -31,7 +32,7 @@ function TutorDashboard() {
 
   return (
     <div>
-      <Navbar role="tutor" />
+     {/*<Navbar role="tutor" />*/}
       <div className="min-h-screen bg-blue-50 p-6">
         <div className="dashboard">
                  

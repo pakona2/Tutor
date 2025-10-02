@@ -28,11 +28,11 @@ function BookSession() {
   useEffect(() => {
     // Sample tutors fallback
     const sampleTutors = [
-      { id: 1, name: 'Ms. Jane Doe', subject: 'Mathematics', email: 'jane@school.com' },
-      { id: 2, name: 'Mr. John Smith', subject: 'English Literature', email: 'john@school.com' },
-      { id: 3, name: 'Mrs. Emily Brown', subject: 'Science', email: 'emily@school.com' },
-      { id: 4, name: 'Dr. Alex Kim', subject: 'Physics', email: 'alex@school.com' },
-      { id: 5, name: 'Prof. Sara Lee', subject: 'Poetry', email: 'sara@school.com' }
+      { id: 1, name: 'Ms. Jane', subject: 'Mathematics', email: 'Dedza Secondary School' },
+      { id: 2, name: 'Mr. John Banda', subject: 'English Literature', email: 'MUST' },
+      { id: 3, name: 'Mrs. Emily Waya', subject: 'Science', email: 'COM' },
+      { id: 4, name: 'Dr. Alex Kim', subject: 'Physics', email: 'UNIMA' },
+      { id: 5, name: 'Prof. Sara Brown', subject: 'Chemistry', email: 'MUBAS' }
     ];
     setTutors(sampleTutors);
     setLoading(prev => ({ ...prev, tutors: false }));
@@ -57,9 +57,9 @@ function BookSession() {
     if (!form.date) newErrors.date = 'Please select a date';
     if (!form.time) newErrors.time = 'Please select a time';
     if (!form.topic.trim()) {
-      newErrors.topic = 'Please enter a topic';
+      newErrors.topic = 'Please enter a module/subject and what you want to learn';
     } else if (form.topic.trim().length < 5) {
-      newErrors.topic = 'Topic should be at least 5 characters';
+      newErrors.topic = 'Module/subject should be at least 5 characters';
     }
     if (form.date && form.time) {
       const selectedDateTime = new Date(`${form.date}T${form.time}`);
@@ -114,7 +114,7 @@ function BookSession() {
     <div>
       <Navbar role="student" />
       <div className="min-h-screen bg-blue-50 p-6 max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">Book a Tutoring Session</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Book a Session</h1>
 
         {/* Status Messages */}
         {submitStatus.success && (
@@ -136,7 +136,7 @@ function BookSession() {
             onChange={handleChange}
             disabled={loading.tutors}
           >
-            <option value="">-- Select Tutor --</option>
+            <option value=""> Select Tutor </option>
             {loading.tutors ? (
               <option disabled>Loading tutors...</option>
             ) : (

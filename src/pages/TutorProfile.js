@@ -24,7 +24,7 @@ function TutorProfile() {
 
   return (
     <div>
-      <Navbar role="tutor" />
+      {/*<Navbar role="tutor" />*/}
       <div className="min-h-screen bg-gray-100 p-6 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Tutor Profile</h1>
         <div className="profile-form bg-white p-6 rounded shadow-md">

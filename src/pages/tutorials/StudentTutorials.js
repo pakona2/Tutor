@@ -13,7 +13,7 @@ function StudentTutorials() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
       <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 md:p-8">
         <h1 className="text-2xl font-bold mb-6 text-blue-700 dark:text-blue-300 text-center">Tutorials & Exam Papers</h1>
-        <h2 className="text-xl font-semibold mb-4">Tutorial Videos</h2>
+        <h2 className="text-xl font-semibold mb-4">Tutorials</h2>
         {videos.length === 0 ? <p className="text-center">No tutorials uploaded yet.</p> : (
           <div className="video-list mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             {videos.map((vid, idx) => (
@@ -24,7 +24,7 @@ function StudentTutorials() {
             ))}
           </div>
         )}
-        <h2 className="text-xl font-semibold mb-4">Exam Papers</h2>
+        <h2 className="text-xl font-semibold mb-4">Papers</h2>
         {papers.length === 0 ? <p className="text-center">No exam papers uploaded yet.</p> : (
           <ul className="list-disc pl-6">
             {papers.map((paper, idx) => (
