@@ -98,16 +98,16 @@ function Navbar({ role }) {
           <span style={{fontSize:'2rem'}}>&#9776;</span>
         </button>
         {menuOpen && (
-          <div className="navbar-dropdown" style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',background:'rgba(30,41,59,0.98)',zIndex:9999,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-            <Link to="/help" className="navbar-link" style={{marginBottom:16,fontSize:'1.2rem',color:'#fff'}} onClick={()=>setMenuOpen(false)}>Help Center</Link>
-            <Link to="/referral" className="navbar-link" style={{marginBottom:16,fontSize:'1.2rem',color:'#fff'}} onClick={()=>setMenuOpen(false)}>Referral Program</Link>
+          <div className="navbar-dropdown" style={{position:'absolute',top:'60px',right:'16px',minWidth:'220px',background:darkMode ? '#334155' : '#fff',boxShadow:'0 8px 24px rgba(0,0,0,0.15)',borderRadius:'12px',zIndex:9999,padding:'18px 0',display:'flex',flexDirection:'column',alignItems:'flex-end'}}>
+            <Link to="/help" className="navbar-link" style={{margin:'0 24px 12px 0',fontSize:'1.1rem',color:darkMode ? '#fff' : '#222'}} onClick={()=>setMenuOpen(false)}>Help Center</Link>
+            <Link to="/referral" className="navbar-link" style={{margin:'0 24px 12px 0',fontSize:'1.1rem',color:darkMode ? '#fff' : '#222'}} onClick={()=>setMenuOpen(false)}>Referral Program</Link>
             {role === 'tutor' && (
-              <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{marginBottom:16,fontSize:'1.2rem',color:'#fff'}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+              <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{margin:'0 24px 12px 0',fontSize:'1.1rem',color:darkMode ? '#fff' : '#222'}} onClick={()=>setMenuOpen(false)}>Profile</Link>
             )}
             {role === 'student' && (
-              <Link to="/student-profile" className="navbar-link" style={{marginBottom:16,fontSize:'1.2rem',color:'#fff'}} onClick={()=>setMenuOpen(false)}>Profile</Link>
+              <Link to="/student-profile" className="navbar-link" style={{margin:'0 24px 12px 0',fontSize:'1.1rem',color:darkMode ? '#fff' : '#222'}} onClick={()=>setMenuOpen(false)}>Profile</Link>
             )}
-            <select value={lang} onChange={handleLangChange} className="navbar-link" style={{marginBottom:16,padding:'8px 16px',borderRadius:8,fontSize:'1.1rem'}}>
+            <select value={lang} onChange={handleLangChange} className="navbar-link" style={{margin:'0 24px 12px 0',padding:'8px 16px',borderRadius:8,fontSize:'1.05rem',color:darkMode ? '#fff' : '#222',background:darkMode ? '#334155' : '#fff'}}>
               <option value="en">EN</option>
               <option value="es">ES</option>
               <option value="fr">FR</option>
@@ -115,10 +115,10 @@ function Navbar({ role }) {
               <option value="ny">Chichewa</option>
               <option value="sw">Swahili</option>
             </select>
-            <button onClick={toggleDarkMode} className="navbar-link" style={{marginBottom:16,fontSize:'1.2rem',color:'#fff'}}>
+            <button onClick={toggleDarkMode} className="navbar-link" style={{margin:'0 24px 12px 0',fontSize:'1.1rem',color:darkMode ? '#fff' : '#222'}}>
               {darkMode ? 'Light Mode' : 'Dark Mode'}
             </button>
-            <button onClick={() => {handleLogout(); setMenuOpen(false);}} className="navbar-logout" style={{marginBottom:16,fontSize:'1.2rem',color:'#fff'}}>Logout</button>
+            <button onClick={() => {handleLogout(); setMenuOpen(false);}} className="navbar-logout" style={{margin:'0 24px 0 0',fontSize:'1.1rem',color:darkMode ? '#fff' : '#222'}}>Logout</button>
           </div>
         )}
       </div>
