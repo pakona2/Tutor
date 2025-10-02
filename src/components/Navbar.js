@@ -48,7 +48,7 @@ function Navbar({ role }) {
           </>
         )}
       </div>
-      <div className="navbar-right desktop-menu">
+     {/*<div className="navbar-right desktop-menu">
         <button onClick={toggleDarkMode} className="navbar-link" style={{marginRight:12}}>
           {darkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
@@ -64,7 +64,7 @@ function Navbar({ role }) {
           </>
         )}
         <button onClick={handleLogout} className="navbar-logout">Logout</button>
-      </div>
+      </div>*/}
         <div className="navbar-right desktop-menu">
           <select value={lang} onChange={handleLangChange} className="navbar-link" style={{marginRight:12,padding:'4px 8px',borderRadius:6}}>
             <option value="en">EN</option>
