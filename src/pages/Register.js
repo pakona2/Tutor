@@ -100,7 +100,7 @@ function Register() {
             <option value="tutor">Tutor</option>
           </select>
 
-          <div style={{margin:'10px', textAlign:'l'}}>
+          {/*<div style={{margin:'10px', textAlign:'l'}}>
             <label style={{display:'flex', alignItems:'center', fontSize:'0.98rem'}}>
               <input
                 type="checkbox"
@@ -111,7 +111,32 @@ function Register() {
               />
               I accept the <a href="/terms" target="_blank" rel="noopener noreferrer" style={{color:'#2563eb', textDecoration:'underline', marginLeft:4}}>Terms and Conditions</a>
             </label>
-          </div>
+          </div>*/}
+         <div style={{ margin: '16px 0', textAlign: 'left' }}>
+  <label style={{
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '1rem',
+    lineHeight: '1.5',
+    cursor: 'pointer'
+  }}>
+    <input
+      type="checkbox"
+      checked={acceptedTerms}
+      onChange={e => setAcceptedTerms(e.target.checked)}
+      style={{
+        marginRight: '12px',
+        width: '18px',
+        height: '18px',
+        accentColor: '#007bff'
+      }}
+      required
+    />
+    I accept the<a href="/terms" target="_blank" rel="noopener noreferrer" style={{color:'#2563eb', textDecoration:'underline', marginLeft:4}}>Terms & Conditions</a>
+  </label>
+</div>
+
+
           <button type="submit" disabled={isSubmitting} className="button">
             {isSubmitting ? 'Registering...' : 'Register'}
           </button>
@@ -123,7 +148,7 @@ function Register() {
             Login here
           </Link>
         </p>
-      </div>
+       </div>
     </div>
   );
 }

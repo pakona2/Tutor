@@ -1,28 +1,49 @@
 /* Plain CSS for Login, Register, StudentDashboard, TutorDashboard */
-
 .page-container {
-  min-height: 90vh;
+  min-height: 100vh; /* Full viewport height for better vertical centering */
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #e3f0ff 0%, #f9fafb 100%);
+  padding: 16px; /* Adds breathing room on smaller screens */
+  box-sizing: border-box;
 }
 
 .form-box {
-  background: #fff;
-  padding: 30px 24px;
-  border-radius: 14px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  width: 70%;
-  max-width: 300px;
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
   text-align: center;
-  transition: transform 0.2s;
-  height:50%;
+  /*transition: transform 0.2s ease-in-out;*/
+}
+.form-box input {
+  width: 100%;
+  padding: 16px 20px;
+  margin: 12px 0; /* Equal vertical spacing */
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  min-height:48px;
+}
+
+.form-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
 }
 
 .form-box:hover {
   transform: scale(1.02);
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.12); /* Slightly deeper shadow for emphasis */
 }
+
+
+/*.form-box:hover {
+  transform: scale(1.02);
+}*/
 
 .logo {
   width: 90px;
@@ -39,14 +60,15 @@
 }
 
 .input {
-  width: 70%;
-  padding: 14px;
+  width: 100%;
+  padding: 15px;
   margin-bottom: 18px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 1rem;
   background: #f3f4f6;
   transition: border 0.2s;
+  height: 20px;
 }
 
 .input:focus {
@@ -55,10 +77,10 @@
 }
 
 .button {
-  width: 70%;
+  width: 100%;
   background: #2563eb;
   color: #fff;
-  padding: 14px;
+  padding: 16px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -589,3 +611,5 @@
   font-weight: 600;
   color: #2563eb;
 }
+
+/*reset password*/
