@@ -29,7 +29,7 @@ function TutorSessions() {
 
   return (
     <div>
-      <Navbar role="tutor" />
+      {/*<Navbar role="tutor" />*/}
       <div className="min-h-screen bg-gray-100 p-6 max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">My Sessions</h1>
 

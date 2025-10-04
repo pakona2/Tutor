@@ -53,8 +53,8 @@ function Navbar({ role }) {
           <option value="es">ES</option>
           <option value="fr">FR</option>
           <option value="de">DE</option>
-          <option value="ny">Chichewa</option>
-          <option value="sw">Swahili</option>
+          <option value="ny">Chic</option>
+          <option value="sw">Swah</option>
         </select>
         <Link to="/referral" className="navbar-link" style={{ marginRight: 12 }}>Referral</Link>
         <button onClick={toggleDarkMode} className="navbar-link" style={{ marginRight: 12 }}>
@@ -90,7 +90,7 @@ function Navbar({ role }) {
             alignItems: 'flex-end'
           }}>
             <Link to="/help" className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Help Center</Link>
-            <Link to="/referral" className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Referral Program</Link>
+            <Link to="/referral" className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Referrals</Link>
             {role === 'tutor' && (
               <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Profile</Link>
             )}
@@ -109,8 +109,8 @@ function Navbar({ role }) {
               <option value="es">ES</option>
               <option value="fr">FR</option>
               <option value="de">DE</option>
-              <option value="ny">Chichewa</option>
-              <option value="sw">Swahili</option>
+              <option value="ny">Chic</option>
+              <option value="sw">Swah</option>
             </select>
             <button onClick={toggleDarkMode} className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }}>
               {darkMode ? 'Light Mode' : 'Dark Mode'}
