@@ -8,6 +8,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,13 +46,27 @@ function Login() {
             required
           />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             className="input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <span
+            className="tongle-eye"
+            onClick={() => setShowPassword((prev) => !prev)}
+            style={{
+              marginLeft: '-30px',
+              zIndex: 1,
+              cursor: 'pointer',
+              fontSize: '18px',
+              color: '#555',
+              userSelect: 'none'
+            }}
+          >
+            {setShowPassword ? '👁️' : '👁️'}  
+          </span> 
           <button type="submit" className="button">Log In</button>
         </form>
         <p>
