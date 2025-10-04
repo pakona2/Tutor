@@ -16,6 +16,8 @@ function Register() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +82,33 @@ function Register() {
           />
 
           <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            className="input"
+            placeholder="Password (min 6 characters)"
+            value={formData.password}
+            onChange={handleChange}
+            minLength="6"
+            required
+          />
+          <span
+            className="tongle-eye"
+            onClick={() => setShowPassword((prev) => !prev)}
+            style={{
+              marginLeft: '-30px',
+              zIndex: 1,
+              cursor: 'pointer',
+              fontSize: '18px',
+              color: '#555',
+              userSelect: 'none'
+            }}
+          >
+            {setShowPassword ? '👁️' : '👁️'}  
+          </span>         
+
+
+         {/*
+          <input
             type="password"
             name="password"
             placeholder="Password (min 6 characters)"
@@ -88,14 +117,18 @@ function Register() {
             onChange={handleChange}
             minLength="6"
             required
-          />
+          />*/}
 
           <select
             name="role"
             className="input"
             value={formData.role}
             onChange={handleChange}
+            required
           >
+            <option value="" disabled>
+              Select Role
+            </option>
             <option value="student">Student</option>
             <option value="tutor">Tutor</option>
           </select>

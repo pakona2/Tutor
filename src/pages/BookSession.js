@@ -112,7 +112,7 @@ function BookSession() {
 
   return (
     <div>
-      <Navbar role="student" />
+      {/*<Navbar role="student" />*/}
       <div className="min-h-screen bg-blue-50 p-6 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Book a Session</h1>
 
