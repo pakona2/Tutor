@@ -13,11 +13,24 @@
     "socket.io-client": "^4.7.5",
     "web-vitals": "^5.1.0"
   },
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   },
   "browserslist": {
     "production": [
@@ -30,8 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-plugin-react-hooks": "^6.1.1"
   }
 }
