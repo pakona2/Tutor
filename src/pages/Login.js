@@ -57,15 +57,17 @@ function Login() {
             className="tongle-eye"
             onClick={() => setShowPassword((prev) => !prev)}
             style={{
+              right: '10px',
+                     
               marginLeft: '-30px',
               zIndex: 1,
               cursor: 'pointer',
-              fontSize: '18px',
+              fontSize: '16px',
               color: '#555',
               userSelect: 'none'
             }}
           >
-            {setShowPassword ? '👁️' : '👁️'}  
+            {showPassword ? '🙈' : '👁️'}  
           </span> 
           <button type="submit" className="button">Log In</button>
         </form>

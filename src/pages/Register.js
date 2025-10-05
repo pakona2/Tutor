@@ -60,7 +60,7 @@ function Register() {
 
         {error && <div className="error">{error}</div>}
 
-  <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="fullName"
@@ -103,7 +103,7 @@ function Register() {
               userSelect: 'none'
             }}
           >
-            {setShowPassword ? '👁️' : '👁️'}  
+            {showPassword ? '🙈' : '👁️'}  
           </span>         
 
 
@@ -121,6 +121,7 @@ function Register() {
 
           <select
             name="role"
+            placeholder="Select Role"
             className="input"
             value={formData.role}
             onChange={handleChange}
@@ -146,13 +147,13 @@ function Register() {
             </label>
           </div>*/}
          <div style={{ margin: '16px 0', textAlign: 'left' }}>
-  <label style={{
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: '1rem',
-    lineHeight: '1.5',
-    cursor: 'pointer'
-  }}>
+         <label style={{
+           display: 'flex',
+           alignItems: 'center',
+           fontSize: '1rem',
+           lineHeight: '1.5',
+          cursor: 'pointer'
+      }}>
     <input
       type="checkbox"
       checked={acceptedTerms}

@@ -70,10 +70,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-  <Route path="/student-dashboard" element={<><Navbar role="student" /><StudentDashboard /></>} />
-  <Route path="/tutor-dashboard" element={<><Navbar role="tutor" /><TutorDashboard /></>} />}
-  <Route path="/register" element={<Register />} />
-  <Route path="/login" element={<Login />} />
+        <Route path="/student-dashboard" element={<><Navbar role="student" /><StudentDashboard /></>} />
+        <Route path="/tutor-dashboard" element={<><Navbar role="tutor" /><TutorDashboard /></>} />}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/student-profile" element={<><BackArrow /><StudentProfile /></>} />
         <Route path="/tutor-profile/:tutorId" element={<><BackArrow /><TutorProfile /></>} />
         <Route path="/payment" element={<><BackArrow /><Payment /></>} />
@@ -84,7 +84,7 @@ function App() {
         <Route path="/tutor-search" element={<><BackArrow /><TutorSearch /></>} />
         <Route path="/help" element={<><BackArrow /><HelpCenter /></>} />
         <Route path="/terms" element={<><BackArrow /><TermsAndConditions /></>} />
-        <Route path="/student-tutorials" element={<><BackArrow /><StudentTutorials /></>} />
+        <Route path="/student-tutorials" element={<StudentTutorials />} />
         <Route path="/tutor-upload" element={<><BackArrow /><TutorUpload /></>} />
         <Route path="/referral" element={<><BackArrow /><ReferralProgram /></>} />
         <Route path="/" element={<Home />} />
