@@ -122,12 +122,12 @@ function ReferralProgram({ lang = 'en' }) {
           <button className="px-4 py-2 rounded text-sm text-white" onClick={() => openShareWindow(facebookUrl)} style={{ background: '#4267B2' }}>
             Facebook
           </button>
-          <button className="px-4 py-2 rounded text-sm text-white" onClick={() => openShareWindow(twitterUrl)} style={{ background: '#1DA1F2' }}>
+          {/*<button className="px-4 py-2 rounded text-sm text-white" onClick={() => openShareWindow(twitterUrl)} style={{ background: '#1DA1F2' }}>
             Twitter
           </button>
           <button className="px-4 py-2 rounded text-sm text-white" onClick={() => openShareWindow(linkedInUrl)} style={{ background: '#0A66C2' }}>
             LinkedIn
-          </button>
+          </button>*/}
           <button className="px-4 py-2 rounded text-sm bg-gray-200 dark:bg-gray-700" onClick={() => setShowModal(true)}>
             {t('sendEmail', lang)}
           </button>

@@ -153,12 +153,12 @@ export default function StudentTutorials() {
               <option value="oldest">Oldest first</option>
             </select>
 
-            <label htmlFor="pageSize" style={{ fontWeight: 700 }}>Per page</label>
+            {/*<label htmlFor="pageSize" style={{ fontWeight: 700 }}>Per page</label>
             <select id="pageSize" value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }} className="input-field" style={{ maxWidth: 120 }}>
               <option value={4}>4</option>
               <option value={6}>6</option>
               <option value={9}>9</option>
-            </select>
+            </select>*/}
           </div>
 
           <div style={{ display: 'flex', gap: 8, marginLeft: 12 }}>

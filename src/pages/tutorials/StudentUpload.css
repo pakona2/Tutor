@@ -7,7 +7,7 @@
 .upload-page { 
   padding: 14px;
   background: #fbfbfc;
-  color: #111827;
+  /*color: hsl(221, 39%, 11%);*/
   -webkit-font-smoothing:antialiased;
 }
 
