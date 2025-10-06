@@ -1,6 +1,7 @@
 // StudentTutorials.js
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import './TutorUpload.css'; // reuse your TutorUpload.css for consistent styling
+import './StudentUpload.css'; 
+//import Navbar from '.../components/Navbar';// reuse your TutorUpload.css for consistent styling
 
 export default function StudentTutorials() {
   // raw data
@@ -131,12 +132,12 @@ export default function StudentTutorials() {
   return (
     <div className="upload-page" style={{ padding: 16 }}>
       <div className="upload-container" style={{ maxWidth: 1100 }}>
-        <h1 className="upload-title">Student Dashboard — Tutorials & Papers</h1>
+        <h1 className="upload-title">Tutorials & Papers</h1>
 
         {/* Controls */}
         <div className="search-row" style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', flex: 1, flexWrap: 'wrap' }}>
-            <label htmlFor="uploader" style={{ fontWeight: 700 }}>Uploader</label>
+            <label htmlFor="uploader" style={{ fontWeight: 700 }}>Tutor</label>
             <select id="uploader" value={filterUploader} onChange={(e) => { setFilterUploader(e.target.value); setPage(1); }} className="input-field" style={{ maxWidth: 220 }}>
               {uploaders.map((u, i) => <option key={i} value={u}>{u}</option>)}
             </select>
@@ -161,7 +162,7 @@ export default function StudentTutorials() {
           </div>
 
           <div style={{ display: 'flex', gap: 8, marginLeft: 12 }}>
-            <input aria-label="Search titles" type="search" placeholder="Search titles..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-field" style={{ width: 220 }} />
+            <input aria-label="Search titles" type="search" placeholder="Search tutorials..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-field" style={{ width: 220 }} />
             <button onClick={resetFilters} className="upload-button" style={{ padding: '8px 10px', background: '#f3f4f6', color: '#111827', fontWeight: 700 }}>Reset</button>
           </div>
         </div>
@@ -175,7 +176,7 @@ export default function StudentTutorials() {
         {/* Tutorials */}
         <h2 className="section-title" style={{ marginBottom: 8 }}>Tutorials</h2>
         {filteredVideos.length === 0 ? (
-          <p className="muted" style={{ marginBottom: 12 }}>No tutorials match your filters.</p>
+          <p className="muted" style={{ marginBottom: 12 }}>No tutorials found.</p>
         ) : (
           <>
             <div className="card-grid" style={{ marginBottom: 12 }}>
@@ -246,7 +247,7 @@ export default function StudentTutorials() {
         {/* Papers */}
         <h2 className="section-title" style={{ marginBottom: 8 }}>Papers</h2>
         {filteredPapers.length === 0 ? (
-          <p className="muted">No papers match your filters.</p>
+          <p className="muted">No papers found.</p>
         ) : (
           <div className="card-grid" style={{ marginBottom: 12 }}>
             {filteredPapers.map((paper, idx) => (
