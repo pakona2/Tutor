@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaBook, FaMoneyBillWave, FaBolt } from 'react-icons/fa'; // FaBolt as app symbol
 
 function Navbar({ role }) {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = React.useState(() => localStorage.getItem('darkMode') === 'true');
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [lang, setLang] = React.useState(localStorage.getItem('lang') || 'en');
+  const [clickedLink, setClickedLink] = React.useState('');
+  const [showAppName, setShowAppName] = React.useState(false);
 
   React.useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    if (darkMode) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
     localStorage.setItem('darkMode', darkMode);
   }, [darkMode]);
 
@@ -29,26 +29,47 @@ function Navbar({ role }) {
     window.location.reload();
   };
 
+  const mobileLinks = [
+    { icon: <FaBook />, label: 'Book Session', to: '/book-session' },
+    { icon: <FaBook />, label: 'Tutorials', to: '/student-tutorials' },
+    { icon: <FaMoneyBillWave />, label: 'Payment', to: '/payment' },
+  ];
+
+  const handleMobileClick = (label) => {
+    setClickedLink(label);
+    setTimeout(() => setClickedLink(''), 2000);
+  };
+
   return (
-    <nav className={`navbar ${darkMode ? 'dark' : ''}`}>
-      <div className="navbar-left">
-        <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} className="navbar-logo">Home</Link>
-        {role === 'tutor' && (
-          <>
-            <Link to="/tutor-sessions" className="navbar-link">Sessions</Link>
-            <Link to="/tutor-upload" className="navbar-link">Tutorials</Link>
-          </>
-        )}
-        {role === 'student' && (
-          <>
-            <Link to="/book-session" className="navbar-link">Book Session</Link>
-            <Link to="/student-tutorials" className="navbar-link">Tutorials</Link>
-          </>
+    <nav style={navbarStyle}>
+      {/* Logo as symbol */}
+      <div
+        style={logoStyle}
+        onMouseEnter={() => setShowAppName(true)}
+        onMouseLeave={() => setShowAppName(false)}
+        onClick={() => setShowAppName(prev => !prev)}
+      >
+        <Link to={role === 'tutor' ? '/tutor-dashboard' : '/student-dashboard'} style={logoLinkStyle}>
+          <FaBolt size={28} title="Pakachere App" />
+        </Link>
+        {showAppName && (
+          <span style={appNameStyle}>Pakachere</span>
         )}
       </div>
 
-      <div className="navbar-right desktop-menu">
-        <select value={lang} onChange={handleLangChange} className="navbar-link" style={{ marginRight: 12, padding: '4px 8px', borderRadius: 6 }}>
+      {/* Desktop Navbar */}
+      <div className="desktop-menu" style={desktopMenuStyle}>
+        {role === 'student' && (
+          <>
+            <Link to="/book-session" style={desktopLinkStyle}><FaBook /> Book Session</Link>
+            <Link to="/student-tutorials" style={desktopLinkStyle}><FaBook /> Tutorials</Link>
+            <Link to="/payment" style={desktopLinkStyle}><FaMoneyBillWave /> Payment</Link>
+          </>
+        )}
+        <Link to="/referral" style={desktopLinkStyle}>Referral</Link>
+        <Link to="/help" style={desktopLinkStyle}>Help Center</Link>
+        <Link to="/student-profile" style={desktopLinkStyle}>Profile</Link>
+        <select value={lang} onChange={handleLangChange} style={selectStyle}>
           <option value="en">EN</option>
           <option value="es">ES</option>
           <option value="fr">FR</option>
@@ -56,55 +77,42 @@ function Navbar({ role }) {
           <option value="ny">Chic</option>
           <option value="sw">Swah</option>
         </select>
-        <Link to="/referral" className="navbar-link" style={{ marginRight: 12 }}>Referral</Link>
-        <button onClick={toggleDarkMode} className="navbar-link" style={{ marginRight: 12 }}>
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </button>
-        <Link to="/help" className="navbar-link" style={{ marginRight: 12 }}>Help Center</Link>
-        {role === 'tutor' && (
-          <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link">Profile</Link>
-        )}
-        {role === 'student' && (
-          <Link to="/student-profile" className="navbar-link">Profile</Link>
-        )}
-        <button onClick={handleLogout} className="navbar-logout">Logout</button>
+        <button onClick={toggleDarkMode} style={buttonStyle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+        <button onClick={handleLogout} style={buttonStyle}>Logout</button>
       </div>
 
-      <div className="navbar-mobile-menu">
-        <button className="navbar-hamburger" onClick={() => setMenuOpen(m => !m)}>
-          <span style={{ fontSize: '2rem' }}>&#9776;</span>
-        </button>
+      {/* Mobile Navbar */}
+      <div className="mobile-menu" style={mobileMenuStyle}>
+        {mobileLinks.map(link => (
+          <div key={link.label} style={mobileIconWrapper}>
+            <Link
+              to={link.to}
+              onClick={() => handleMobileClick(link.label)}
+              style={mobileLinkStyle}
+            >
+              {link.icon}
+            </Link>
+            <span
+              style={{
+                ...mobileLabelStyle,
+                opacity: clickedLink === link.label ? 1 : 0,
+                transform: clickedLink === link.label ? 'translateY(-28px)' : 'translateY(0)',
+                transition: 'opacity 0.3s ease, transform 0.3s ease'
+              }}
+            >
+              {link.label}
+            </span>
+          </div>
+        ))}
+
+        {/* Hamburger for hidden menu */}
+        <button onClick={() => setMenuOpen(m => !m)} style={hamburgerStyle}>&#9776;</button>
         {menuOpen && (
-          <div className="navbar-dropdown" style={{
-            position: 'absolute',
-            top: '60px',
-            right: '16px',
-            minWidth: '220px',
-            background: darkMode ? '#334155' : '#fff',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-            borderRadius: '12px',
-            zIndex: 9999,
-            padding: '18px 0',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end'
-          }}>
-            <Link to="/help" className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Help Center</Link>
-            <Link to="/referral" className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Referrals</Link>
-            {role === 'tutor' && (
-              <Link to={`/tutor-profile/${localStorage.getItem('tutor_id') || 'demo-tutor'}`} className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Profile</Link>
-            )}
-            {role === 'student' && (
-              <Link to="/student-profile" className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }} onClick={() => setMenuOpen(false)}>Profile</Link>
-            )}
-            <select value={lang} onChange={handleLangChange} className="navbar-link" style={{
-              margin: '0 24px 12px 0',
-              padding: '8px 16px',
-              borderRadius: 8,
-              fontSize: '1.05rem',
-              color: darkMode ? '#fff' : '#222',
-              background: darkMode ? '#334155' : '#fff'
-            }}>
+          <div style={{ ...mobileDropdownStyle, background: darkMode ? '#1e293b' : '#fff' }}>
+            <Link to="/referral" style={mobileDropdownLinkStyle(darkMode)} onClick={() => setMenuOpen(false)}>Referral</Link>
+            <Link to="/help" style={mobileDropdownLinkStyle(darkMode)} onClick={() => setMenuOpen(false)}>Help Center</Link>
+            <Link to="/student-profile" style={mobileDropdownLinkStyle(darkMode)} onClick={() => setMenuOpen(false)}>Profile</Link>
+            <select value={lang} onChange={handleLangChange} style={selectStyle}>
               <option value="en">EN</option>
               <option value="es">ES</option>
               <option value="fr">FR</option>
@@ -112,10 +120,8 @@ function Navbar({ role }) {
               <option value="ny">Chic</option>
               <option value="sw">Swah</option>
             </select>
-            <button onClick={toggleDarkMode} className="navbar-link" style={{ margin: '0 24px 12px 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }}>
-              {darkMode ? 'Light Mode' : 'Dark Mode'}
-            </button>
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="navbar-logout" style={{ margin: '0 24px 0 0', fontSize: '1.1rem', color: darkMode ? '#fff' : '#222' }}>Logout</button>
+            <button onClick={toggleDarkMode} style={buttonStyle}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }} style={buttonStyle}>Logout</button>
           </div>
         )}
       </div>
@@ -123,6 +129,59 @@ function Navbar({ role }) {
   );
 }
 
+/* ----- Styles ----- */
+const navbarStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0.5rem 1rem',
+  background: '#f9fafb',
+  borderBottom: '1px solid #e5e7eb',
+  position: 'relative'
+};
+
+const logoStyle = {
+  flex: 1,
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  cursor: 'pointer'
+};
+const logoLinkStyle = { textDecoration: 'none', color: '#2563eb', display: 'flex', alignItems: 'center' };
+const appNameStyle = {
+  position: 'absolute',
+  top: '40px',
+  left: '0',
+  background: '#2563eb',
+  color: '#fff',
+  padding: '2px 6px',
+  borderRadius: 4,
+  fontSize: '0.85rem',
+  whiteSpace: 'nowrap',
+};
+
+const desktopMenuStyle = { display: 'flex', alignItems: 'center', gap: '1rem' };
+const desktopLinkStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.3rem',
+  textDecoration: 'none',
+  color: '#222',
+  fontSize: '1rem',
+  padding: '6px 10px',
+  borderRadius: 6,
+  transition: 'all 0.2s ease',
+  cursor: 'pointer'
+};
+
+const mobileMenuStyle = { display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' };
+const mobileIconWrapper = { position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' };
+const mobileLinkStyle = { fontSize: '1.8rem', color: '#2563eb', textDecoration: 'none', transition: 'transform 0.2s ease' };
+const mobileLabelStyle = { position: 'absolute', top: '-28px', background: '#2563eb', color: '#fff', padding: '2px 6px', borderRadius: 4, fontSize: '0.75rem', whiteSpace: 'nowrap' };
+const selectStyle = { padding: '4px 8px', borderRadius: 6, margin: '0.25rem 0', cursor: 'pointer' };
+const buttonStyle = { padding: '6px 12px', borderRadius: 6, cursor: 'pointer', background: '#2563eb', color: '#fff', border: 'none', margin: '0.25rem 0', transition: 'all 0.2s ease' };
+const hamburgerStyle = { fontSize: '2rem', background: 'none', border: 'none', cursor: 'pointer', color: '#2563eb' };
+const mobileDropdownStyle = { position: 'absolute', top: '60px', right: '16px', minWidth: '200px', borderRadius: 8, padding: '12px 0', boxShadow: '0 8px 24px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column', gap: '0.5rem', zIndex: 9999 };
+const mobileDropdownLinkStyle = (darkMode) => ({ padding: '6px 12px', color: darkMode ? '#fff' : '#222', textDecoration: 'none', fontSize: '1rem', transition: 'background 0.2s' });
+
 export default Navbar;
-
-

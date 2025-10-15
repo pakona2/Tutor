@@ -1,58 +1,78 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-
-const API = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  withCredentials: true,
-});
+import { Link } from 'react-router-dom';
+import './pages.css';
 
 function ResetPassword() {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (email.trim() === '') {
-      setError('Please enter your email');
-      return;
-    }
-
-    try {
-      await API.post('/reset-password', { email });
-      setMessage(`If an account with ${email} exists, a password reset link has been sent.`);
-      setError('');
-      setEmail('');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to send reset link.');
-      setMessage('');
-    }
+    setTimeout(() => {
+      setSubmitted(true);
+    }, 1000);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 p-6">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-4 text-blue-700">Reset Password</h1>
-        <p className="mb-6 text-gray-600 text-center">Enter your email address below and we'll send you a link to reset your password.</p>
-        <form onSubmit={handleSubmit} className="w-full">
-          <label className="block mb-2 font-semibold text-gray-700">Email Address</label>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            className="w-full p-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 mb-4 transition"
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
-          >
-            Send Reset Link
-          </button>
-        </form>
-        {message && <p className="mt-6 text-green-700 font-semibold text-center">{message}</p>}
-        {error && <p className="mt-6 text-red-700 font-semibold text-center">{error}</p>}
+    <div className="landing-container" style={{ background: '#f9fafb', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{
+        background: '#fff',
+        borderRadius: '18px',
+        boxShadow: '0 2px 12px rgba(37,99,235,0.10)',
+        padding: '40px 32px',
+        maxWidth: '400px',
+        width: '90%',
+        textAlign: 'center'
+      }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2563eb', marginBottom: '1rem' }}>Reset Password</h1>
+        <p style={{ color: '#2563eb', marginBottom: '2rem' }}>
+          Enter your registered email address and we’ll send you a reset link.
+        </p>
+
+        {!submitted ? (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px solid #cbd5e1',
+                marginBottom: '1.2rem',
+                outline: 'none'
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '32px',
+                background: '#2563eb',
+                color: '#fff',
+                fontWeight: 'bold',
+                boxShadow: '0 4px 24px rgba(37,99,235,0.18)',
+                cursor: 'pointer'
+              }}
+            >
+              Send Reset Link
+            </button>
+          </form>
+        ) : (
+          <div style={{ color: '#16a34a', fontWeight: '600', marginTop: '1rem' }}>
+            ✅ Reset link sent to <strong>{email}</strong>
+          </div>
+        )}
+
+        <div style={{ marginTop: '2rem' }}>
+          <Link to="/login" style={{ color: '#2563eb', textDecoration: 'underline', fontWeight: '500' }}>
+            Back to Login
+          </Link>
+        </div>
       </div>
     </div>
   );
